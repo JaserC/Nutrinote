@@ -1,33 +1,36 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
-// late List<CameraDescription> _cameras;
+late List<CameraDescription> _cameras;
 
-// Future<void> main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-//   _cameras = await availableCameras();
-//   runApp(const CameraApp());
-// }
-
-/// CameraApp is the Main Application.
-class CameraApp extends StatefulWidget {
-  /// Default Constructor
-  final List<CameraDescription> cameras;
-  const CameraApp({super.key, required this.cameras});
-  //const CameraApp({super.key});
-
-  @override
-  State<CameraApp> createState() => _CameraAppState();
+  _cameras = await availableCameras();
+  runApp(const CameraScreen());
 }
 
-class _CameraAppState extends State<CameraApp> {
+/// CameraApp is the Main Application.
+class CameraScreen extends StatefulWidget {
+  /// Default Constructor
+  // final List<CameraDescription> cameras;
+  // const CameraScreen({super.key, required this.cameras});
+
+  const CameraScreen({super.key});
+
+  @override
+  State<CameraScreen> createState() => _CameraScreenState();
+}
+
+class _CameraScreenState extends State<CameraScreen> {
   late CameraController controller;
+  
+  //get _cameras async => await availableCameras();
 
   @override
   void initState() {
     super.initState();
-    controller = CameraController(widget.cameras[0], ResolutionPreset.max);
+    controller = CameraController(_cameras[0], ResolutionPreset.max);
     controller.initialize().then((_) {
       if (!mounted) {
         return;
@@ -53,27 +56,50 @@ class _CameraAppState extends State<CameraApp> {
     super.dispose();
   }
 
-  @override
+    @override
   Widget build(BuildContext context) {
-    if (!controller.value.isInitialized) {
-      return Container();
-    }
-    // return MaterialApp(
-    //   home: CameraPreview(controller),
-    // );
-    return MaterialApp(
-      home: Scaffold (
-        appBar: AppBar(title: const Text('Food Finder')),
-        body: Center(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const Row(
+          children: [
+          Icon(Icons.food_bank, color: Colors.green, size: 40),
+          SizedBox(width: 20),    
+          Text("Food Focus", style: TextStyle(color: Colors.green)), ]
+        ),
+        backgroundColor: Colors.white,
+        elevation: 0.0
+      ),
+      body: Center(
           child: SizedBox(
             height: MediaQuery.of(context).size.height * 0.95,
             width: MediaQuery.of(context).size.width * 0.95,
             child: CameraPreview(controller),
           ),
         ),
-      )
     );
   }
 
-  
+    // @override
+  // Widget build(BuildContext context) {
+  //   if (!controller.value.isInitialized) {
+  //     return Container();
+  //   }
+  //   // return MaterialApp(
+  //   //   home: CameraPreview(controller),
+  //   // );
+  //   return MaterialApp(
+  //     home: Scaffold (
+  //       appBar: AppBar(title: const Text('Food Finder')),
+  //       body: Center(
+  //         child: SizedBox(
+  //           height: MediaQuery.of(context).size.height * 0.95,
+  //           width: MediaQuery.of(context).size.width * 0.95,
+  //           child: CameraPreview(controller),
+  //         ),
+  //       ),
+  //     )
+  //   );
+  // }
+
 }

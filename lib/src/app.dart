@@ -3,6 +3,7 @@ import 'package:food_focus/src/views/history_screen.dart';
 import 'package:food_focus/src/views/home_screen.dart';
 import 'package:food_focus/src/views/profile_screen.dart';
 import 'views/search_screen.dart';
+import 'package:food_focus/src/views/camera_screen.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({
@@ -67,7 +68,7 @@ class _NavBarTempState extends State<NavBarTemp> {
       body: <Widget>[
         const HomeScreen(),
         const SearchScreen(),
-        const SearchScreen(),
+        const CameraScreen(),
         const HistoryScreen(),
         ProfileScreen(),
       ][currentPageIndex],
