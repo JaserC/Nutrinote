@@ -1,14 +1,17 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 
-late List<CameraDescription> _cameras;
+// late List<CameraDescription> _cameras;
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+// Future<void> main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
 
-  _cameras = await availableCameras();
-  runApp(const CameraScreen());
-}
+//   _cameras = await availableCameras();
+//   runApp(CameraScreen(cameras: _cameras));
+//   // runApp(const CameraScreen());
+// }
 
 /// CameraApp is the Main Application.
 class CameraScreen extends StatefulWidget {
@@ -24,31 +27,64 @@ class CameraScreen extends StatefulWidget {
 
 class _CameraScreenState extends State<CameraScreen> {
   late CameraController controller;
-  
+
+  late Future<void> _initializeControllerFuture;
+
   //get _cameras async => await availableCameras();
 
   @override
   void initState() {
     super.initState();
-    controller = CameraController(_cameras[0], ResolutionPreset.max);
-    controller.initialize().then((_) {
-      if (!mounted) {
-        return;
-      }
-      setState(() {});
-    }).catchError((Object e) {
-      if (e is CameraException) {
-        switch (e.code) {
-          case 'CameraAccessDenied':
-            // Handle access errors here.
-            break;
-          default:
-            // Handle other errors here.
-            break;
-        }
-      }
-    });
+    _initialzeCamera();
   }
+
+  Future<void> _initialzeCamera() async {
+    final cameras = await availableCameras();
+    if (cameras.isNotEmpty) {
+      controller = CameraController(cameras[0], ResolutionPreset.max);
+      _initializeControllerFuture = controller.initialize();
+      controller.initialize().then((_) {
+        if (!mounted) {
+          return;
+        }
+        setState(() {});
+      }).catchError((Object e) {
+        if (e is CameraException) {
+          switch (e.code) {
+            case 'CameraAccessDenied':
+              // Handle access errors here.
+              break;
+            default:
+              // Handle other errors here.
+              break;
+          }
+        }
+      });
+    }
+  }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   controller = CameraController(_cameras[0], ResolutionPreset.max);
+  // controller.initialize().then((_) {
+  //   if (!mounted) {
+  //     return;
+  //   }
+  //   setState(() {});
+  // }).catchError((Object e) {
+  //   if (e is CameraException) {
+  //     switch (e.code) {
+  //       case 'CameraAccessDenied':
+  //         // Handle access errors here.
+  //         break;
+  //       default:
+  //         // Handle other errors here.
+  //         break;
+  //     }
+  //   }
+  // });
+  // }
 
   @override
   void dispose() {
@@ -56,50 +92,83 @@ class _CameraScreenState extends State<CameraScreen> {
     super.dispose();
   }
 
-    @override
+  Future<void> _takePicture() async {
+    final imageLocation = await getTemporaryDirectory();
+    final imagePath = join(imageLocation.path, '${DateTime.now()}.png');
+    XFile picture = await controller.takePicture();
+    picture.saveTo(imagePath);
+    print(imagePath);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Row(
-          children: [
-          Icon(Icons.food_bank, color: Colors.green, size: 40),
-          SizedBox(width: 20),    
-          Text("Food Focus", style: TextStyle(color: Colors.green)), ]
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0.0
+          title: Row(children: [
+            Icon(Icons.food_bank, color: Colors.green, size: 40),
+            SizedBox(width: 20),
+            Text("Food Focus", style: TextStyle(color: Colors.green)),
+            IconButton(onPressed: _takePicture, icon: Icon(Icons.camera))
+          ]),
+          backgroundColor: Colors.white,
+          elevation: 0.0),
+      body: FutureBuilder<void>(
+        future: _initializeControllerFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (!controller.value.isInitialized) {
+              return Container();
+            }
+            return Center(
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height * 0.95,
+                width: MediaQuery.of(context).size.width * 0.95,
+                child: CameraPreview(controller),
+              ),
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
       ),
-      body: Center(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.95,
-            width: MediaQuery.of(context).size.width * 0.95,
-            child: CameraPreview(controller),
-          ),
-        ),
     );
   }
 
-    // @override
+  // @override
   // Widget build(BuildContext context) {
-  //   if (!controller.value.isInitialized) {
-  //     return Container();
-  //   }
-  //   // return MaterialApp(
-  //   //   home: CameraPreview(controller),
-  //   // );
-  //   return MaterialApp(
-  //     home: Scaffold (
-  //       appBar: AppBar(title: const Text('Food Finder')),
-  //       body: Center(
-  //         child: SizedBox(
-  //           height: MediaQuery.of(context).size.height * 0.95,
-  //           width: MediaQuery.of(context).size.width * 0.95,
-  //           child: CameraPreview(controller),
-  //         ),
+  //   return Scaffold(
+  //     backgroundColor: Colors.white,
+  //     appBar: AppBar(
+  //       title: const Row(
+  //         children: [
+  //         Icon(Icons.food_bank, color: Colors.green, size: 40),
+  //         SizedBox(width: 20),
+  //         Text("Food Focus", style: TextStyle(color: Colors.green)), ]
   //       ),
-  //     )
+  //       backgroundColor: Colors.white,
+  //       elevation: 0.0
+  //     ),
+  //     body: FutureBuilder<void>(
+  //       future: _initializeControllerFuture,
+  //       builder: (context, snapshot) {
+  //         if (snapshot.connectionState == ConnectionState.done) {
+  //           if (!controller.value.isInitialized) {
+  //             return Container();
+  //           }
+  //           return Center(
+  //             child: SizedBox(
+  //               height: MediaQuery.of(context).size.height * 0.95,
+  //               width: MediaQuery.of(context).size.width * 0.95,
+  //               child: CameraPreview(controller),
+  //             ),
+  //           );
+  //         } else {
+  //           return const Center(child: CircularProgressIndicator());
+  //         }
+  //       },
+  //     ),
+
   //   );
   // }
-
 }
