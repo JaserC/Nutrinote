@@ -7,7 +7,7 @@ class HomeScreen extends StatelessWidget {
   final List<Map<String, dynamic>> featuredMeals = [
     {
       "name": "Lemon Herb Chicken",
-      "image": "assets/images/emonherbchicken.jpg",
+      "image": "assets/images/lemonherbchicken.jpg",
       "nutrition": ["Calories: 250", "Protein: 25g", "Carbs: 10g"],
     },
     {
@@ -184,7 +184,7 @@ class MealDetailScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: Image.network(
+              child: Image.asset(
                 mealImage,
                 width: 300,
                 height: 200,

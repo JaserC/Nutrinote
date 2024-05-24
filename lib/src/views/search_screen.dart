@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:food_focus/src/models/food_item.dart';
-import 'package:food_focus/src/views/home_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -19,7 +18,7 @@ class _SearchScreenState extends State<SearchScreen> {
     //filtering our list
     setState(() {
       displayList = foods.where((element) => element.mealName.toLowerCase().contains(value.toLowerCase())).toList();
-    });
+      });
   }
 
   @override

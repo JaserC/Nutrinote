@@ -36,11 +36,15 @@ class FoodItem extends StatelessWidget {
         child: Row(
           children: [
             Container(width: 20,),
-            Image.asset(
-                mealImagePath,
-                width: 80,
-                height: 80,
-                fit: BoxFit.cover,
+            Container( 
+                padding: EdgeInsets.all(4), // Border width 
+                decoration: BoxDecoration(color: Colors.yellow[100], shape: BoxShape.circle), 
+                child: ClipOval( 
+                    child: SizedBox.fromSize( 
+                        size: Size.fromRadius(40), // Image radius 
+                        child: Image.asset(mealImagePath, fit: BoxFit.cover), 
+                    ), 
+                ), 
             ),
             Container(width: 20),
             Text(
@@ -54,6 +58,16 @@ class FoodItem extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  compareTo(FoodItem b) {
+    if (mealName.compareTo(b.mealName) == 1) {
+      return 1;
+    } else if (mealName.compareTo(b.mealName) == 0) {
+      return 0;
+    } else {
+      return -1;
+    }
   }
 }
 
@@ -81,7 +95,7 @@ class MealDetailScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: Image.network(
+              child: Image.asset(
                 mealImagePath,
                 width: 300,
                 height: 200,
@@ -121,11 +135,11 @@ List<FoodItem> foods = [
     FoodItem(mealName: 'Brown Rice',mealImagePath: 'assets/images/brown rice.jpeg'),
     FoodItem(mealName: 'White Rice',mealImagePath: 'assets/images/white rice.jpeg'),
     FoodItem(mealName: 'Sweet Potato',mealImagePath: 'assets/images/sweet potato.jpeg'),
-    // FoodItem(mealName: 'Baked Chicken Thighs',mealImagePath: 'lib/src/images/bakedchickenthighs.jpg'),
-    // FoodItem(mealName: 'Chicken Fajitas',mealImagePath: 'lib/src/images/chickenfajitas.jpg'),
-    // FoodItem(mealName: 'Creamy Garlic Chicken',mealImagePath: 'lib/src/images/creamygarlicchicken.jpg'),
-    // FoodItem(mealName: 'Smoked Salmon Salad',mealImagePath: 'lib/src/images/smokedsalmonsalad.jpg'),
-    // FoodItem(mealName: 'Tofu Stirfry',mealImagePath: 'lib/src/images/tofustirfry.jpg'),
+    FoodItem(mealName: 'Baked Chicken Thighs',mealImagePath: 'assets/images/bakedchickenthighs.jpg'),
+    FoodItem(mealName: 'Chicken Fajitas',mealImagePath: 'assets/images/chickenfajitas.jpg'),
+    FoodItem(mealName: 'Creamy Garlic Chicken',mealImagePath: 'assets/images/creamygarlicchicken.jpg'),
+    FoodItem(mealName: 'Smoked Salmon Salad',mealImagePath: 'assets/images/smokedsalmonsalad.jpg'),
+    FoodItem(mealName: 'Tofu Stirfry',mealImagePath: 'assets/images/tofustirfry.jpg'),
     
     // FoodItem('Avocado'),
     // FoodItem('Blueberry'),
