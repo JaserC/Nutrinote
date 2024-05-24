@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_focus/src/models/food_item.dart';
+import 'package:food_focus/src/views/home_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -17,7 +18,7 @@ class _SearchScreenState extends State<SearchScreen> {
   void updateList (String value) {
     //filtering our list
     setState(() {
-      displayList = foods.where((element) => element.foodName.toLowerCase().contains(value.toLowerCase())).toList();
+      displayList = foods.where((element) => element.mealName.toLowerCase().contains(value.toLowerCase())).toList();
     });
   }
 
@@ -26,11 +27,11 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Row(
+        title: Row(
           children: [
-          Icon(Icons.food_bank, color: Colors.green, size: 40),
-          SizedBox(width: 20),    
-          Text("Food Focus", style: TextStyle(color: Colors.green)), ]
+          Image.asset('assets/images/food_focus_logo.png', width: 40, height: 40),
+          const SizedBox(width: 10),    
+          const Text("Food Focus", style: TextStyle(color: Colors.green)), ]
         ),
         backgroundColor: Colors.white,
         elevation: 0.0
@@ -48,7 +49,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   border:OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
-                  hintText: "eg. Peaches",
+                  hintText: "eg. chicken",
                   hintStyle: TextStyle(color: Colors.grey),
                   prefixIcon: const Icon(Icons.search),
                   prefixIconColor: Colors.grey,
@@ -58,10 +59,9 @@ class _SearchScreenState extends State<SearchScreen> {
               Expanded(
                 child: ListView.builder(
                   itemCount: displayList.length,
-                  itemBuilder: (context,index) => ListTile(
-                    contentPadding: const EdgeInsets.all(5.0),
-                    leading: Icon(Icons.apple_rounded, color:Colors.greenAccent),
-                    title:Text(displayList[index].foodName, style: TextStyle(color: Colors.green))
+                  itemBuilder: (context,index) => FoodItem(
+                    mealName: displayList[index].mealName,
+                    mealImagePath: displayList[index].mealImagePath,
                   ),
                   )
               ),

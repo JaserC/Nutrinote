@@ -7,17 +7,17 @@ class HomeScreen extends StatelessWidget {
   final List<Map<String, dynamic>> featuredMeals = [
     {
       "name": "Lemon Herb Chicken",
-      "image": "lib/src/images/lemonherbchicken.jpg",
+      "image": "assets/images/emonherbchicken.jpg",
       "nutrition": ["Calories: 250", "Protein: 25g", "Carbs: 10g"],
     },
     {
       "name": "Smoked Salmon Salad",
-      "image": "lib/src/images/smokedsalmonsalad.jpg",
+      "image": "assets/images/smokedsalmonsalad.jpg",
       "nutrition": ["Calories: 200", "Protein: 20g", "Carbs: 5g"],
     },
     {
       "name": "Tofu Stir Fry",
-      "image": "lib/src/images/tofustirfry.jpg",
+      "image": "assets/images/tofustirfry.jpg",
       "nutrition": ["Calories: 300", "Protein: 15g", "Carbs: 20g"],
     },
   ];
@@ -25,17 +25,17 @@ class HomeScreen extends StatelessWidget {
   final List<Map<String, dynamic>> recommendedMeals = [
     {
       "name": "Creamy Garlic Chicken",
-      "image": "lib/src/images/creamygarlicchicken.jpg",
+      "image": "assets/images/creamygarlicchicken.jpg",
       "nutrition": ["Calories: 350", "Protein: 30g", "Carbs: 15g"],
     },
     {
       "name": "Chicken Fajitas",
-      "image": "lib/src/images/chickenfajitas.jpg",
+      "image": "assets/images/chickenfajitas.jpg",
       "nutrition": ["Calories: 400", "Protein: 35g", "Carbs: 20g"],
     },
     {
       "name": "Baked Chicken Thighs",
-      "image": "lib/src/images/bakedchickenthighs.jpg",
+      "image": "assets/images/bakedchickenthighs.jpg",
       "nutrition": ["Calories: 450", "Protein: 40g", "Carbs: 25g"],
     },
   ];
@@ -45,7 +45,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Row(
+        title: Row(
           children: [
             Icon(Icons.food_bank, color: Colors.green, size: 40),
             SizedBox(width: 20),
