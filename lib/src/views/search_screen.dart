@@ -61,6 +61,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   itemBuilder: (context,index) => FoodItem(
                     mealName: displayList[index].mealName,
                     mealImagePath: displayList[index].mealImagePath,
+                    nutritionFacts: displayList[index].nutritionFacts,
                   ),
                   )
               ),
