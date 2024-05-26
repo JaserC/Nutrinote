@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:food_focus/src/providers/history_provider.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+
+//https://stackoverflow.com/questions/65213035/how-to-get-city-from-coordinates-in-flutter
+
 
 class FoodItem extends StatelessWidget {
   final String mealName;
@@ -79,12 +84,14 @@ class PreviousItem extends StatelessWidget {
   final String mealImagePath;
   final List<String> nutritionFacts;
   final DateTime dateTime;
+  final Position? location;
 
   const PreviousItem({
     required this.mealName,
     required this.mealImagePath,
     required this.nutritionFacts,
     required this.dateTime,
+    this.location,
     super.key,
   });
 
@@ -112,31 +119,17 @@ class PreviousItem extends StatelessWidget {
                         child: Image.asset(mealImagePath, fit: BoxFit.cover), 
             ), 
           ),
-          
-          // Container(
-          //   width: 150,  // Adjusted width to better display the meal name
-          //   margin: const EdgeInsets.symmetric(horizontal: 8.0),
-          //   decoration: BoxDecoration(
-          //     borderRadius: BorderRadius.circular(15),
-          //     color: Colors.green[100],
-          //   ),
-          //   child: Center(
-          //     child: Text(
-          //       mealName,
-          //       textAlign: TextAlign.center,
-          //       style: const TextStyle(
-          //         fontSize: 12,
-          //         color: Colors.green,
-          //         fontWeight: FontWeight.bold,
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          Text(mealName, style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold, fontSize: 12)),
-          Text(dateTime.toString(), style: TextStyle(color: Colors.green[300], fontSize: 10)),
+          Text(mealName, style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold, fontSize: 12), textAlign: TextAlign.center,),
+          Text(_formatDateTime(dateTime), style: TextStyle(color: Colors.green[300], fontSize: 10), textAlign: TextAlign.center,),
+          Text((location != null) ? location.toString() : 'No Location', style: TextStyle(color: Colors.green[300], fontSize: 10), textAlign: TextAlign.center,),
+
         ],
       ),
     );
+  }
+
+  _formatDateTime(DateTime when){
+    return DateFormat.yMd().add_jm().format(when);
   }
 }
 
@@ -195,7 +188,7 @@ class MealDetailScreen extends StatelessWidget {
                     height: 30,
                     child: Text(nutritionFacts[0]),
                 ),
-                Container(
+                 SizedBox(
                     height: 30,
                     child: Text(nutritionFacts[1]),
                 ),
@@ -237,23 +230,4 @@ List<FoodItem> foods = [
     const FoodItem(mealName: 'Brown Rice', mealImagePath: 'assets/images/brownrice.jpeg', nutritionFacts: ["Calories: 215", "Protein: 5g", "Carbs: 45g"]),
     const FoodItem(mealName: 'White Rice', mealImagePath: 'assets/images/whiterice.jpeg', nutritionFacts: ["Calories: 205", "Protein: 4g", "Carbs: 45g"]),
     const FoodItem(mealName: 'Sweet Potato', mealImagePath: 'assets/images/sweetpotato.jpeg', nutritionFacts: ["Calories: 112", "Protein: 2g", "Carbs: 26g"]),
-
-
-    // FoodItem('Avocado'),
-    // FoodItem('Blueberry'),
-    // FoodItem('Greek Yogurt'),
-    // FoodItem('Oatmeal'),
-    // FoodItem('Lentil'),
-    // FoodItem('Chickpea'),
-    // FoodItem('Tofu'),
-    // FoodItem('Kale'),
-    // FoodItem('Strawberrie'),
-    // FoodItem('Bell Pepper'),
-    // FoodItem('Orange'),
-    // FoodItem('Tuna'),
-    // FoodItem('Walnut'),
-    // FoodItem('Whole Wheat Bread'),
-    // FoodItem('Mushroom'),
-    // FoodItem('Cucumber'),
-    // FoodItem('Cheese'),
   ];

@@ -22,7 +22,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
       displayList = historyProvider.pastFoods;
       });
   }
-  
+
   @override
   void initState() {
     super.initState();
@@ -67,7 +67,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         mealName: displayList[index].mealName, 
                         mealImagePath: displayList[index].mealImagePath, 
                         nutritionFacts: displayList[index].nutritionFacts, 
-                        dateTime: displayList[index].dateTime
+                        dateTime: displayList[index].dateTime,
+                        location: displayList[index].location,
                       ),
                   ),
             ),
