@@ -1,30 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:food_focus/src/models/food_item.dart';
+import 'package:food_focus/src/utils/uuid_generator.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:hive/hive.dart';
 
 class HistoryProvider extends ChangeNotifier {
-  final List<PreviousItem> _pastFoods;
+  final Box<PreviousItem> _pastFoods;
+  
+  HistoryProvider(Box<PreviousItem> box) : _pastFoods = Hive.box<PreviousItem>('previous_items');
 
-  HistoryProvider() : _pastFoods = [];
 
-
-  List<PreviousItem> get pastFoods => _pastFoods;
+  List<PreviousItem> get pastFoods => List.from(_pastFoods.values);
 
   // Add a new food.
   Future<void> add(FoodItem item) async {
+    UUIDString uuid = UUIDMaker.generateUUID();
     try {
       Position position = await getCurrentLocation();
-      _pastFoods.add(PreviousItem(
+      _pastFoods.put(uuid, PreviousItem(
         mealName: item.mealName,
         mealImagePath: item.mealImagePath,
         nutritionFacts: item.nutritionFacts,
         dateTime: DateTime.now(),
         location: position,
+        uuid: uuid,
       ));
       notifyListeners();
     } catch (e) {
       // Handle location fetch error
-      print('Error fetching location: $e');
+      _pastFoods.put(uuid, PreviousItem(
+        mealName: item.mealName,
+        mealImagePath: item.mealImagePath,
+        nutritionFacts: item.nutritionFacts,
+        dateTime: DateTime.now(),
+        uuid: uuid,
+      ));
+      notifyListeners();
     }
   }
 

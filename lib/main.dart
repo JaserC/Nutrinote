@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:food_focus/src/models/food_item.dart';
+import 'package:food_focus/src/models/snap.dart';
 import 'package:food_focus/src/providers/history_provider.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'src/app.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
-  // Load the user's preferred theme while the splash screen is displayed.
-  // This prevents a sudden theme change when the app is first displayed.
+  await Hive.initFlutter();
+
+  Hive.registerAdapter(ItemAdapter());
+
+  final box = await Hive.openBox<PreviousItem>('previous_items');
+
 
   //await dotenv.load(fileName: ".env");
 
@@ -15,7 +23,7 @@ void main() async {
   // SettingsView.
   runApp(
       ChangeNotifierProvider(
-        create: (context) => HistoryProvider() , 
+        create: (context) => HistoryProvider(box) , 
         child: MyApp(),
       )
     );

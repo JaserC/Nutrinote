@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_focus/src/models/food_item.dart';
 import 'package:food_focus/src/providers/history_provider.dart';
-import 'package:food_focus/src/views/about_screen.dart';
+import 'package:food_focus/src/utils/uuid_generator.dart';
 import 'package:provider/provider.dart';
 
 
@@ -69,6 +69,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         nutritionFacts: displayList[index].nutritionFacts, 
                         dateTime: displayList[index].dateTime,
                         location: displayList[index].location,
+                        uuid: displayList[index].uuid,
                       ),
                   ),
             ),

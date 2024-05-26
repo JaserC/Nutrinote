@@ -1,9 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:food_focus/src/providers/history_provider.dart';
+import 'package:food_focus/src/utils/uuid_generator.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+
+part 'food_item.g.dart';
 
 //https://stackoverflow.com/questions/65213035/how-to-get-city-from-coordinates-in-flutter
 
@@ -79,12 +85,21 @@ class FoodItem extends StatelessWidget {
   }
 }
 
+@HiveType(typeId: 3, adapterName: "ItemAdapter")
+
 class PreviousItem extends StatelessWidget {
+  @HiveField(0)
   final String mealName;
+  @HiveField(1)
   final String mealImagePath;
+  @HiveField(2)
   final List<String> nutritionFacts;
+  @HiveField(3)
   final DateTime dateTime;
+  @HiveField(4)
   final Position? location;
+  @HiveField(5)
+  final UUIDString uuid;
 
   const PreviousItem({
     required this.mealName,
@@ -92,6 +107,7 @@ class PreviousItem extends StatelessWidget {
     required this.nutritionFacts,
     required this.dateTime,
     this.location,
+    required this.uuid,
     super.key,
   });
 
@@ -153,6 +169,12 @@ class MealDetailScreen extends StatelessWidget {
           floatingActionButton: FloatingActionButton(
             onPressed: (){
               historyProvider.add(FoodItem(mealName: mealName, mealImagePath: mealImagePath, nutritionFacts: nutritionFacts));
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Item Added!'),
+                  backgroundColor: Colors.green,
+                )
+              );
             },
             backgroundColor: Colors.greenAccent,
             child: Icon(Icons.add),
