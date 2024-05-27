@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'dart:io';
+import 'dart:async';
 
 /// CameraApp is the Main Application.
 class CameraScreen extends StatefulWidget {
@@ -16,18 +18,18 @@ class CameraScreen extends StatefulWidget {
 class _CameraScreenState extends State<CameraScreen> {
   late CameraController controller;
 
-  late Future<void> _initializeControllerFuture;
-  
+  Future<void>? _initializeControllerFuture;
+
   bool _isPermissionGrantedCamera = false;
   bool _isPermissionGrantedMicrophone = false;
 
   @override
   void initState() {
     super.initState();
-    _initialzeCamera();
+    _initializeCamera();
   }
 
-  Future<void> _initialzeCamera() async {
+  Future<void> _initializeCamera() async {
     final statusCam = await Permission.camera.request();
     final statusMic = await Permission.microphone.request();
     if (statusCam.isGranted && statusMic.isGranted) {
@@ -39,23 +41,7 @@ class _CameraScreenState extends State<CameraScreen> {
       if (cameras.isNotEmpty) {
         controller = CameraController(cameras[0], ResolutionPreset.max);
         _initializeControllerFuture = controller.initialize();
-        controller.initialize().then((_) {
-          if (!mounted) {
-            return;
-          }
-          setState(() {});
-        }).catchError((Object e) {
-          if (e is CameraException) {
-            switch (e.code) {
-              case 'CameraAccessDenied':
-                // Handle access errors here.
-                break;
-              default:
-                // Handle other errors here.
-                break;
-            }
-          }
-        });
+        setState(() {});
       }
     } else {
       setState(() {
@@ -63,22 +49,36 @@ class _CameraScreenState extends State<CameraScreen> {
         _isPermissionGrantedMicrophone = false;
       });
     }
-
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    if (controller.value.isInitialized) {
+      controller.dispose();
+    }
     super.dispose();
   }
 
   Future<void> _takePicture() async {
-    final imageLocation = await getTemporaryDirectory(); // possible error
-    final imagePath = join(imageLocation.path, '${DateTime.now()}.png');
-    print(imagePath);
-    XFile picture = await controller.takePicture();
-    picture.saveTo(imagePath);
-
+    if (controller.value.isInitialized) {
+      final isPermissionGrantedCamera = await Permission.storage.request();
+      if (isPermissionGrantedCamera == PermissionStatus.granted) {
+        print("message 1");
+        final imageLocation = await getTemporaryDirectory(); // error
+        print("message 2");
+        final imagePath = join(imageLocation.path, '${DateTime.now()}.png');
+        print(imagePath);
+        print("message 3");
+        XFile picture = await controller.takePicture();
+        print("message 4");
+        await picture.saveTo(imagePath);
+        print('Picture taken successfully');
+      } else {
+        print("Storage permission is required");
+      }
+    } else {
+      print('Camera is not available at the moment');
+    }
   }
 
   @override
@@ -90,7 +90,7 @@ class _CameraScreenState extends State<CameraScreen> {
             Icon(Icons.food_bank, color: Colors.green, size: 40),
             SizedBox(width: 20),
             Text("Food Focus", style: TextStyle(color: Colors.green)),
-            IconButton(onPressed: _takePicture, icon: Icon(Icons.camera))
+            // IconButton(onPressed: _takePicture, icon: Icon(Icons.camera))
           ]),
           backgroundColor: Colors.white,
           elevation: 0.0),
@@ -102,13 +102,25 @@ class _CameraScreenState extends State<CameraScreen> {
                   if (!controller.value.isInitialized) {
                     return Container();
                   }
-                  return Center(
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.95,
-                      width: MediaQuery.of(context).size.width * 0.95,
-                      child: CameraPreview(controller),
+                  return Stack(children: [
+                    Center(
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.95,
+                        width: MediaQuery.of(context).size.width * 0.95,
+                        child: CameraPreview(controller),
+                      ),
                     ),
-                  );
+                    Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Visibility(
+                                visible: controller.value.isInitialized,
+                                child: FloatingActionButton(
+                                  onPressed: /* ()=> */ _takePicture,
+                                  child: const Icon(Icons.camera_alt),
+                                )))),
+                  ]);
                 } else {
                   return const Center(child: CircularProgressIndicator());
                 }
