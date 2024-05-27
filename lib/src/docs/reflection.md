@@ -1,7 +1,6 @@
 # Reflection
 
 
-
 ## Topics
 Identify which of the course topics you applied (e.g. secure data persistence) and describe how you applied them
 
