@@ -4,28 +4,29 @@
 
 ## Commit Id
 
-## Time
 
-## Place
+Time: 
 
-## Device and Settings
+Place:
 
-## Does Well
+Device and Settings
 
-## Does Poorly and Possible Improvements
+Does Well:
+
+Does Poorly and Possible Improvements:
 
 ## Accessibility Issue
 
-## Name/Brief Description
+Name/Brief Description:
 
-## Testing Method
+Testing Method:
 
-## Evidence
+Evidence:
 
-## Explanation
+Explanation:
 
-## Severity
+Severity:
 
-## Justification
+Justification:
 
-## Possible Solution
+Possible Solution:
