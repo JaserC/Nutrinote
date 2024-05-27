@@ -6,9 +6,12 @@ We conducted our SUS Testing with at least 9 participants, where they tried out 
 SUS Testing #1
 
 Name: Amy
-System Usability Scale Score: 
-Learnabilty Subscore:
-Usability Subscore:
+
+System Usability Scale Score: 80 (Acceptable)
+
+Learnabilty Subscore: 75
+
+Usability Subscore: 81.25
 
 ## Usability 
 
