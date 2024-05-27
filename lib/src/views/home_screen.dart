@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  // Sample data for meals
+  // Sample data for featured meals
   final List<Map<String, dynamic>> featuredMeals = [
     {
       "name": "Lemon Herb Chicken",
@@ -22,6 +22,7 @@ class HomeScreen extends StatelessWidget {
     },
   ];
 
+  // Recommended meals tiles
   final List<Map<String, dynamic>> recommendedMeals = [
     {
       "name": "Creamy Garlic Chicken",
@@ -45,65 +46,68 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Row(
+        title: Row(
           children: [
-            Icon(Icons.food_bank, color: Colors.green, size: 40),
-            SizedBox(width: 20),
-            Text("Food Focus", style: const TextStyle(color: Colors.green)),
+            Image.asset('assets/images/food_focus_logo.png', width: 40, height: 40),
+            const SizedBox(width: 10),
+            const Text("Food Focus", style: TextStyle(color: Colors.green)),
           ],
         ),
         backgroundColor: Colors.white,
         elevation: 0.0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Welcome Back!',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const Text(
-              'Featured',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            SizedBox(
-              height: 100,  // Adjusted height to fit meal name only
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: featuredMeals.length,
-                itemBuilder: (context, index) {
-                  return MealTile(
-                    mealName: featuredMeals[index]['name']!,
-                    mealImage: featuredMeals[index]['image']!,
-                    nutritionFacts: featuredMeals[index]['nutrition']!,
-                  );
-                },
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Welcome Back!',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'Recommended',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            SizedBox(
-              height: 100,  // Adjusted height to fit meal name only
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: recommendedMeals.length,
-                itemBuilder: (context, index) {
-                  return MealTile(
-                    mealName: recommendedMeals[index]['name']!,
-                    mealImage: recommendedMeals[index]['image']!,
-                    nutritionFacts: recommendedMeals[index]['nutrition']!,
-                  );
-                },
+              const SizedBox(height: 10),
+              const Text(
+                'Featured Meals',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-            ),
-          ],
+              const SizedBox(height: 10),
+              SizedBox(
+                height: 200,  // Adjusted height to fit image and meal name
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: featuredMeals.length,
+                  itemBuilder: (context, index) {
+                    return MealTile(
+                      mealName: featuredMeals[index]['name']!,
+                      mealImage: featuredMeals[index]['image']!,
+                      nutritionFacts: featuredMeals[index]['nutrition']!,
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Recommended Meals',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              SizedBox(
+                height: 200,  // Adjusted height to fit image and meal name
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: recommendedMeals.length,
+                  itemBuilder: (context, index) {
+                    return MealTile(
+                      mealName: recommendedMeals[index]['name']!,
+                      mealImage: recommendedMeals[index]['image']!,
+                      nutritionFacts: recommendedMeals[index]['nutrition']!,
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -137,15 +141,28 @@ class MealTile extends StatelessWidget {
           ),
         );
       },
-      child: Container(
-        width: 150,  // Adjusted width to better display the meal name
-        margin: const EdgeInsets.symmetric(horizontal: 8.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: Colors.green[100],
-        ),
-        child: Center(
-          child: Text(
+      child: Column(
+        children: [
+          Container(
+            width: 150,
+            height: 150,
+            margin: const EdgeInsets.symmetric(horizontal: 8.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: Colors.green[100],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: Image.asset(
+                mealImage,
+                width: 150,
+                height: 150,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          const SizedBox(height: 5),
+          Text(
             mealName,
             textAlign: TextAlign.center,
             style: const TextStyle(
@@ -154,7 +171,7 @@ class MealTile extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-        ),
+        ],
       ),
     );
   }
