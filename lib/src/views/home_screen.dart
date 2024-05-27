@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  // Sample data for featured meals
+  // Sample data for Featured Meals tiles
   final List<Map<String, dynamic>> featuredMeals = [
     {
       "name": "Lemon Herb Chicken",
@@ -20,9 +20,24 @@ class HomeScreen extends StatelessWidget {
       "image": "assets/images/tofustirfry.jpg",
       "nutrition": ["Calories: 300", "Protein: 15g", "Carbs: 20g"],
     },
+    {
+      "name": "Vegetable Curry",
+      "image": 'assets/images/vegetablecurry.jpeg',
+      "nutrition": ["Calories: 300", "Protein: 8g", "Carbs: 45g"],
+    },
+    {
+     "name": "Beef Stir Fry",
+      "image": 'assets/images/beefstirfry.jpeg',
+      "nutrition": ["Calories: 350", "Protein: 30g", "Carbs: 20g"],
+    }, 
+     {
+     "name": "Stuffed Bell Peppers",
+      "image": 'assets/images/stuffedbellpeppers.jpeg',
+      "nutrition": ["Calories: 320", "Protein: 20g", "Carbs: 30g"],
+    }, 
   ];
 
-  // Recommended meals tiles
+  // Sample Data for Recommended Meals tiles
   final List<Map<String, dynamic>> recommendedMeals = [
     {
       "name": "Creamy Garlic Chicken",
@@ -39,19 +54,39 @@ class HomeScreen extends StatelessWidget {
       "image": "assets/images/bakedchickenthighs.jpg",
       "nutrition": ["Calories: 450", "Protein: 40g", "Carbs: 25g"],
     },
+    {
+     "name": "Vietnamese Beef Pho",
+      "image": 'assets/images/beefpho.jpg',
+      "nutrition": ["Calories: 215", "Protein: 15g", "Carbs: 25.2g"],
+    }, 
+    {
+     "name": "Turkey Meatballs",
+      "image": 'assets/images/turkeymeatballs.jpeg',
+      "nutrition": ["Calories: 280", "Protein: 24g", "Carbs: 12g"],
+    }, 
+    {
+     "name": "Grilled Shrimp Skewers",
+      "image": 'assets/images/grilledshrimpskewers.jpeg',
+      "nutrition": ["Calories: 220", "Protein: 25g", "Carbs: 10g"],
+    }, 
   ];
 
+  // Home screen interface with logo, title, and food tiles
+  // Semantics included for accessability
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Row(
-          children: [
-            Image.asset('assets/images/food_focus_logo.png', width: 40, height: 40),
-            const SizedBox(width: 10),
-            const Text("Food Focus", style: TextStyle(color: Colors.green)),
-          ],
+        title: Semantics(
+          label: 'Food Focus Logo and Title',
+          child: Row(
+            children: [
+              Image.asset('assets/images/food_focus_logo.png', width: 40, height: 40),
+              const SizedBox(width: 10),
+              const Text("Food Focus", style: TextStyle(color: Colors.green)),
+            ],
+          ),
         ),
         backgroundColor: Colors.white,
         elevation: 0.0,
@@ -62,18 +97,24 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Welcome Back!',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              Semantics(
+                label: 'Welcome Back Text',
+                child: const Text(
+                  'Welcome Back!',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
               ),
               const SizedBox(height: 10),
-              const Text(
-                'Featured Meals',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              Semantics(
+                label: 'Featured Meals Heading',
+                child: const Text(
+                  'Featured Meals',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
               ),
               const SizedBox(height: 10),
               SizedBox(
-                height: 200,  // Adjusted height to fit image and meal name
+                height: 200, 
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: featuredMeals.length,
@@ -87,13 +128,16 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              const Text(
-                'Recommended Meals',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              Semantics(
+                label: 'Recommended Meals Heading',
+                child: const Text(
+                  'Recommended Meals',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
               ),
               const SizedBox(height: 10),
               SizedBox(
-                height: 200,  // Adjusted height to fit image and meal name
+                height: 200, 
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: recommendedMeals.length,
@@ -141,37 +185,44 @@ class MealTile extends StatelessWidget {
           ),
         );
       },
-      child: Column(
-        children: [
-          Container(
-            width: 150,
-            height: 150,
-            margin: const EdgeInsets.symmetric(horizontal: 8.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: Colors.green[100],
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: Image.asset(
-                mealImage,
-                width: 150,
-                height: 150,
-                fit: BoxFit.cover,
+      child: Semantics(
+        label: 'Meal tile for $mealName',
+        hint: 'Tap to view details',
+        child: Column(
+          children: [
+            Container(
+              width: 150,
+              height: 150,
+              margin: const EdgeInsets.symmetric(horizontal: 8.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Colors.green[100],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.asset(
+                  mealImage,
+                  width: 150,
+                  height: 150,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 5),
-          Text(
-            mealName,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.green,
-              fontWeight: FontWeight.bold,
+            const SizedBox(height: 5),
+            Semantics(
+              label: 'Meal name $mealName',
+              child: Text(
+                mealName,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.green,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -209,20 +260,32 @@ class MealDetailScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            Text(
-              mealName,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Semantics(
+              label: 'Meal name $mealName',
+              child: Text(
+                mealName,
+                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
             ),
             const SizedBox(height: 20),
-            const Text(
-              'Nutrition Facts',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            Semantics(
+              label: 'Nutrition Facts Heading',
+              child: const Text(
+                'Nutrition Facts',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
             ),
             const SizedBox(height: 10),
-            ...nutritionFacts.map((fact) => Text(
-              fact,
-              style: const TextStyle(fontSize: 16),
-            )).toList(),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: nutritionFacts.map((fact) => Semantics(
+                label: 'Nutrition fact $fact',
+                child: Text(
+                  fact,
+                  style: const TextStyle(fontSize: 16),
+                ),
+              )).toList(),
+            ),
           ],
         ),
       ),
