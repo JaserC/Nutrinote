@@ -59,26 +59,59 @@ class _CameraScreenState extends State<CameraScreen> {
     super.dispose();
   }
 
-  Future<void> _takePicture() async {
-    if (controller.value.isInitialized) {
-      final isPermissionGrantedCamera = await Permission.storage.request();
-      if (isPermissionGrantedCamera == PermissionStatus.granted) {
-        print("message 1");
-        final imageLocation = await getTemporaryDirectory(); // error
-        print("message 2");
-        final imagePath = join(imageLocation.path, '${DateTime.now()}.png');
-        print(imagePath);
-        print("message 3");
-        XFile picture = await controller.takePicture();
-        print("message 4");
-        await picture.saveTo(imagePath);
-        print('Picture taken successfully');
-      } else {
-        print("Storage permission is required");
-      }
-    } else {
-      print('Camera is not available at the moment');
+  // Future<void> _takePicture() async {
+  //   if (controller.value.isInitialized) {
+  //     final isPermissionGrantedStorage = await Permission.storage.request();
+  //     if (isPermissionGrantedStorage == PermissionStatus.granted) {
+  //       print("message 1");
+  //       final imageLocation = await getTemporaryDirectory(); // error
+  //       print("message 2");
+  //       final imagePath = join(imageLocation.path, '${DateTime.now()}.png');
+  //       print(imagePath);
+  //       print("message 3");
+  //       XFile picture = await controller.takePicture();
+  //       print("message 4");
+  //       await picture.saveTo(imagePath);
+  //       print('Picture taken successfully');
+  //     } else {
+  //       print("Storage permission is required");
+  //     }
+  //   } else {
+  //     print('Camera is not available at the moment');
+  //   }
+  // }
+
+  Future<void> _entireOp() async {
+    XFile? picture = await _takePicture();
+    if (picture != null) {
+      await _storePicture(picture);
     }
+    else {
+      print('Picture was null');
+    }
+  }
+
+  Future<XFile?> _takePicture() async {
+    if (controller.value.isInitialized) {
+      XFile picture = await controller.takePicture();
+      print('takePicture is called');
+      return picture;
+    }
+    else {
+      return null;
+    }
+  }
+
+  Future<String> _storePicture(XFile picture) async {
+    print('Beginning of storePicture method');
+    final imageLocation = await getTemporaryDirectory();
+    print('getTemporaryDirectory has been called');
+    final imagePath = join(imageLocation.path, '${DateTime.now()}.png');
+    print(imagePath);
+    print('imagePath has been printed');
+    await picture.saveTo(imagePath);
+    print('Picture saved successfully');
+    return imagePath;
   }
 
   @override
@@ -117,7 +150,7 @@ class _CameraScreenState extends State<CameraScreen> {
                             child: Visibility(
                                 visible: controller.value.isInitialized,
                                 child: FloatingActionButton(
-                                  onPressed: /* ()=> */ _takePicture,
+                                  onPressed: /* ()=> */ _entireOp,
                                   child: const Icon(Icons.camera_alt),
                                 )))),
                   ]);
