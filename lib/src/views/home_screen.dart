@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:food_focus/src/models/food_item.dart';
+import 'package:food_focus/src/providers/history_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -243,6 +246,20 @@ class MealDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          final historyProvider = Provider.of<HistoryProvider>(context, listen: false);
+          historyProvider.add(FoodItem(mealName: mealName, mealImagePath: mealImage, nutritionFacts: nutritionFacts));
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Item Added!'),
+              backgroundColor: Colors.green,
+            )
+          );
+        },
+        backgroundColor: Colors.greenAccent,
+        child: const Icon(Icons.add),
+      ),
       appBar: AppBar(
         title: Text(mealName),
       ),

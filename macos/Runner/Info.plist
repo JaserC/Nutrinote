@@ -10,7 +10,8 @@
 	<string>This app requires saving photos from the app to your gallery</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app requires access to your photo gallery for uploading images to the app</string>
-	
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app requires location access for location storage</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

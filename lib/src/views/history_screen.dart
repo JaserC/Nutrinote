@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_focus/src/models/food_item.dart';
 import 'package:food_focus/src/providers/history_provider.dart';
-import 'package:food_focus/src/utils/uuid_generator.dart';
 import 'package:provider/provider.dart';
 
 
@@ -40,8 +39,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
         return Scaffold(
           floatingActionButton: FloatingActionButton (
             onPressed: () => updateList(historyProvider),
-            child: const Icon(Icons.refresh),
             backgroundColor: Colors.green[300],
+            child: const Icon(Icons.refresh),
             ),
           backgroundColor: Colors.white,
           appBar: AppBar(
@@ -54,26 +53,22 @@ class _HistoryScreenState extends State<HistoryScreen> {
             backgroundColor: Colors.white,
             elevation: 0.0
           ),
-          body: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Expanded(
-                    child: GridView.builder(
-                      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 120,
-                        mainAxisExtent: 190,
-                      ),
-                      itemCount: displayList.length,
-                      itemBuilder: (context,index) => PreviousItem(
-                        mealName: displayList[index].mealName, 
-                        mealImagePath: displayList[index].mealImagePath, 
-                        nutritionFacts: displayList[index].nutritionFacts, 
-                        dateTime: displayList[index].dateTime,
-                        location: displayList[index].location,
-                        uuid: displayList[index].uuid,
-                      ),
-                  ),
+          body: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              // maxCrossAxisExtent: 120,
+              crossAxisCount: 3,
+              mainAxisExtent: 190,
             ),
-          ),
+            itemCount: displayList.length,
+            itemBuilder: (context,index) => PreviousItem(
+              mealName: displayList[index].mealName, 
+              mealImagePath: displayList[index].mealImagePath, 
+              nutritionFacts: displayList[index].nutritionFacts, 
+              dateTime: displayList[index].dateTime,
+              location: displayList[index].location,
+              uuid: displayList[index].uuid,
+            ),
+                          ),
         );
       }
     );

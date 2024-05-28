@@ -21,7 +21,7 @@ class ItemAdapter extends TypeAdapter<PreviousItem> {
       mealImagePath: fields[1] as String,
       nutritionFacts: (fields[2] as List).cast<String>(),
       dateTime: fields[3] as DateTime,
-      location: fields[4] as Position?,
+      location: fields[4] as String?,
       uuid: fields[5] as String,
     );
   }

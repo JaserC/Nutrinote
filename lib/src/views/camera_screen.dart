@@ -52,43 +52,29 @@ class _CameraScreenState extends State<CameraScreen> {
   // }
 
   Future<void> _initializeCamera() async {
-    setState(() {
-      _isPermissionGrantedCamera = true;
-      _isPermissionGrantedMicrophone = true;
-    });
     final cameras = await availableCameras();
-    if (cameras.isNotEmpty) {
-      controller = CameraController(cameras[0], ResolutionPreset.max);
-      _initializeControllerFuture = controller.initialize();
-      setState(() {});
-    }
+    controller = CameraController(cameras[0], ResolutionPreset.max);
+    controller.initialize().then((_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _isPermissionGrantedCamera = true;
+        _isPermissionGrantedMicrophone = true;
+      });
+    }).catchError((Object e) {
+      if (e is CameraException) {
+        switch (e.code) {
+          case 'CameraAccessDenied':
+            // Handle access errors here.
+            break;
+          default:
+            // Handle other errors here.
+            break;
+        }
+      }
+    });
   }
-
-  // Future<void> _initializeCamera() async {
-  //   final cameras = await availableCameras();
-  //   controller = CameraController(cameras[0], ResolutionPreset.max);
-  //   controller.initialize().then((_) {
-  //     if (!mounted) {
-  //       return;
-  //     }
-  //     setState(() {
-  //       _isPermissionGrantedCamera = true;
-  //       _isPermissionGrantedMicrophone = true;
-  //     });
-  //   }).catchError((Object e) {
-  //     if (e is CameraException) {
-  //       switch (e.code) {
-  //         case 'CameraAccessDenied':
-  //           // Handle access errors here.
-  //           break;
-  //         default:
-  //           // Handle other errors here.
-  //           break;
-  //       }
-  //       ;
-  //     }
-  //   });
-  // }
 
   @override
   void dispose() {

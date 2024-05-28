@@ -9,6 +9,8 @@ import 'package:settings_ui/settings_ui.dart';
 
 
 class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,7 +73,7 @@ class ProfileScreen extends StatelessWidget {
                     max: 2.0,
                     divisions: 3,
                     value: 1.5,
-                    onChanged: (value) => null,
+                    onChanged: (value) {},
                   ),                
                   title: const Text('Text Size'),
               ),

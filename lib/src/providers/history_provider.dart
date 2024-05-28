@@ -22,7 +22,7 @@ class HistoryProvider extends ChangeNotifier {
         mealImagePath: item.mealImagePath,
         nutritionFacts: item.nutritionFacts,
         dateTime: DateTime.now(),
-        location: position,
+        location: position.toString(),
         uuid: uuid,
       ));
       notifyListeners();
