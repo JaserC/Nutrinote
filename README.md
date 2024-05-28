@@ -1,9 +1,9 @@
 # Final Project: Food Focus
 
 ## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+Food Focus is a reverse image search application that gives users the ability to gain insights into the nutritional information of the food they consume on a daily basis. Along with this comes the ability to keep track of what, when, and where you eat. 
 
-Food Focus is a reverse image search application that gives users the ability to gain insights into the nutritional information of the food they consume on a daily basis. Along with this comes the ability to keep track of what, when, and where you eat.
+For Food Focus, users can take a pictures of their meals that their eating and the app provides nutritional information and locations on where they can purchase the meals. Also, users can search up existing meals and look up more nutritional information on these meals. Users can save their meals of the photos they took in the gallery, which they can look back at the meals they have eaten. Food Focus allows the user to have more freedom to log in their meals and able to understand more about their intakes.
 
 ## Data Design and Data Flow
 Describe the data structures you designed to hold user data, and how you architected your app to use Providers (or another framework, like Bloc) to propagate changes to these data in a reactive way.
