@@ -5,10 +5,15 @@
 Identify which of the course topics you applied (e.g. secure data persistence) and describe how you applied them
 
 Properties of People: Vision
+
 Properties of People: Motor Control (e.g. Fitts’s Law)
+
 Stateless & stateful widgets
+
 Accessing sensors (force, GPS, etc.)
+
 Querying web services
+
 Secure data persistence
 
 ## Changes
