@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:food_focus/src/utils/apiKey.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
 //https://ai.google.dev/gemini-api/docs/get-started/tutorial?lang=dart#flutter
@@ -9,7 +10,7 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 class Gemini {
   static Future identifyImage(XFile image) async {
     //final apiKey = Platform.environment['GEMINI_API_KEY'];
-    const apiKey = 'AIzaSyCvYw78Ut82lkNJmKE8bFWQhn6k4msAjA8';
+    const apiKey = Apikey.key;
     if (apiKey == null) {
       print('No \$API_KEY environment variable');
       exit(1);
