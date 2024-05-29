@@ -67,10 +67,10 @@ class _NavBarTempState extends State<NavBarTemp> {
       ),
       body: <Widget>[
         HomeScreen(),
-        SearchScreen(),
+        const SearchScreen(),
         const CameraScreen(),
         const HistoryScreen(),
-        ProfileScreen(),
+        const ProfileScreen(),
       ][currentPageIndex],
     );
   }

@@ -27,27 +27,127 @@ class CameraScreenState extends State<CameraScreen> {
     _initializeCamera();
   }
 
+  // Future<void> _initializeCamera() async {
+  //   final statusCam = await Permission.camera.request();
+  //   final statusMic = await Permission.microphone.request();
+  //   if (statusCam.isGranted && statusMic.isGranted) {
+  //     setState(() {
+  //       _isPermissionGrantedCamera = true;
+  //       _isPermissionGrantedMicrophone = true;
+  //     });
+  //     final cameras = await availableCameras();
+  //     if (cameras.isNotEmpty) {
+  //       controller = CameraController(cameras[0], ResolutionPreset.max);
+  //       _initializeControllerFuture = controller.initialize();
+  //       setState(() {});
+  //     }
+  //   } else {
+  //     setState(() {
+  //       _isPermissionGrantedCamera = false;
+  //       _isPermissionGrantedMicrophone = false;
+  //     });
+  //   }
+  // }
+
   Future<void> _initializeCamera() async {
-    final statusCam = await Permission.camera.request();
-    final statusMic = await Permission.microphone.request();
-    if (statusCam.isGranted && statusMic.isGranted) {
-      setState(() {
-        _ready = true;
-      });
-      final cameras = await availableCameras();
-      if (cameras.isNotEmpty) {
-        controller = CameraController(cameras[0], ResolutionPreset.max);
-        _initializeControllerFuture = controller.initialize();
-        setState(() {});
-      }
+    setState(() {
+      _isPermissionGrantedCamera = true;
+      _isPermissionGrantedMicrophone = true;
+    });
+    final cameras = await availableCameras();
+    if (cameras.isNotEmpty) {
+      controller = CameraController(cameras[0], ResolutionPreset.max);
+      _initializeControllerFuture = controller.initialize();
+      setState(() {});
     }
   }
+
+  // Future<void> _initializeCamera() async {
+  //   final cameras = await availableCameras();
+  //   controller = CameraController(cameras[0], ResolutionPreset.max);
+  //   controller.initialize().then((_) {
+  //     if (!mounted) {
+  //       return;
+  //     }
+  //     setState(() {
+  //       _isPermissionGrantedCamera = true;
+  //       _isPermissionGrantedMicrophone = true;
+  //     });
+  //   }).catchError((Object e) {
+  //     if (e is CameraException) {
+  //       switch (e.code) {
+  //         case 'CameraAccessDenied':
+  //           // Handle access errors here.
+  //           break;
+  //         default:
+  //           // Handle other errors here.
+  //           break;
+  //       }
+  //       ;
+  //     }
+  //   });
+  // }
 
   @override
   void dispose() {
     controller.dispose();
     super.dispose();
   }
+
+  // Future<void> _takePicture() async {
+  //   if (controller.value.isInitialized) {
+  //     final isPermissionGrantedStorage = await Permission.storage.request();
+  //     if (isPermissionGrantedStorage == PermissionStatus.granted) {
+  //       print("message 1");
+  //       final imageLocation = await getTemporaryDirectory(); // error
+  //       print("message 2");
+  //       final imagePath = join(imageLocation.path, '${DateTime.now()}.png');
+  //       print(imagePath);
+  //       print("message 3");
+  //       XFile picture = await controller.takePicture();
+  //       print("message 4");
+  //       await picture.saveTo(imagePath);
+  //       print('Picture taken successfully');
+  //     } else {
+  //       print("Storage permission is required");
+  //     }
+  //   } else {
+  //     print('Camera is not available at the moment');
+  //   }
+  // }
+
+  // Future<void> _entireOp() async {
+  //   XFile? picture = await _takePicture();
+  //   if (picture != null) {
+  //     await _storePicture(picture);
+  //   }
+  //   else {
+  //     print('Picture was null');
+  //   }
+  // }
+
+  // Future<XFile?> _takePicture() async {
+  //   if (controller.value.isInitialized) {
+  //     XFile picture = await controller.takePicture();
+  //     print('takePicture is called');
+  //     return picture;
+  //   }
+  //   else {
+  //     return null;
+  //   }
+  // }
+
+  // Future<String> _storePicture(XFile picture) async {
+  //   print('Beginning of storePicture method');
+  //   final imageLocation = await getTemporaryDirectory();
+  //   print('getTemporaryDirectory has been called');
+  //   final imagePath = join(imageLocation.path, '${DateTime.now()}.png');
+  //   print(imagePath);
+  //   print('imagePath has been printed');
+  //   await picture.saveTo(imagePath);
+  //   print('Picture saved successfully');
+  //   return imagePath;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -88,22 +188,16 @@ class CameraScreenState extends State<CameraScreen> {
                                   onPressed: () async {
                                     try {
                                       await _initializeControllerFuture;
-
                                       final image =
                                           await controller.takePicture();
 
                                       if (!context.mounted) return;
 
                                       await Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              displayPictureScreen(
-                                            image: image,
-                                          ),
-                                        ),
-                                      );
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  displayPic(image)));
                                     } catch (e) {
-                                      // If an error occurs, log the error to the console.
                                       print(e);
                                     }
                                   },
@@ -121,12 +215,7 @@ class CameraScreenState extends State<CameraScreen> {
     );
   }
 
-  Widget displayPictureScreen({required XFile image}) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Display the Picture')),
-      // The image is stored as a file on the device. Use the `Image.file`
-      // constructor with the given path to display the image.
-      body: Image.file(File(image.path)),
-    );
+  Widget displayPic(XFile context) {
+    return Image.file(File(context.path));
   }
 }

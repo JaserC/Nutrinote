@@ -1,10 +1,8 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:food_focus/src/providers/history_provider.dart';
 import 'package:food_focus/src/utils/uuid_generator.dart';
-import 'package:geolocator/geolocator.dart';
+// import 'package:geolocator/geolocator.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -64,7 +62,7 @@ class FoodItem extends StatelessWidget {
             Text(
             mealName,
             style: const TextStyle(
-              fontSize: 16,
+              fontSize: 14,
               color: Colors.green,
               fontWeight: FontWeight.bold,
             ),
@@ -97,7 +95,7 @@ class PreviousItem extends StatelessWidget {
   @HiveField(3)
   final DateTime dateTime;
   @HiveField(4)
-  final Position? location;
+  final String? location;
   @HiveField(5)
   final UUIDString uuid;
 
@@ -137,7 +135,7 @@ class PreviousItem extends StatelessWidget {
           ),
           Text(mealName, style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold, fontSize: 12), textAlign: TextAlign.center,),
           Text(_formatDateTime(dateTime), style: TextStyle(color: Colors.green[300], fontSize: 10), textAlign: TextAlign.center,),
-          Text((location != null) ? location.toString() : 'No Location', style: TextStyle(color: Colors.green[300], fontSize: 10), textAlign: TextAlign.center,),
+          Text((location != null) ? location.toString() : 'No Location', style: TextStyle(color: Colors.green[300], fontSize: 8), textAlign: TextAlign.center,),
 
         ],
       ),
@@ -177,7 +175,7 @@ class MealDetailScreen extends StatelessWidget {
               );
             },
             backgroundColor: Colors.greenAccent,
-            child: Icon(Icons.add),
+            child: const Icon(Icons.add),
           ),
           appBar: AppBar(
             title: Text(mealName),
@@ -198,7 +196,7 @@ class MealDetailScreen extends StatelessWidget {
                 const SizedBox(height: 20),
                 Text(
                   mealName,
-                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 20),
                 const Text(

@@ -11,6 +11,8 @@ import 'package:settings_ui/settings_ui.dart';
 //https://www.dhiwise.com/post/crafting-the-ultimate-settings-ui-in-flutter
 
 class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,6 +87,8 @@ class ProfileScreen extends StatelessWidget {
                     value: 1.5,
                     onChanged: (value) => null,
                   ),
+                    onChanged: (value) {},
+                  ),                
                   title: const Text('Text Size'),
                 ),
               ],
