@@ -35,7 +35,7 @@ Usability Subscore: 87.5
 
 ### SUS Testing #4
 
-Name:
+Name: Karen
 
 System Usability Scale Score:
 
@@ -45,7 +45,7 @@ Usability Subscore:
 
 ### SUS Testing #5
 
-Name:
+Name: Anthony
 
 System Usability Scale Score:
 
@@ -55,7 +55,7 @@ Usability Subscore:
 
 ### SUS Testing #6
 
-Name:
+Name: Mya
 
 System Usability Scale Score:
 
