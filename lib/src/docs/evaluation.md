@@ -37,31 +37,31 @@ Usability Subscore: 87.5
 
 Name: Karen
 
-System Usability Scale Score:
+System Usability Scale Score: 75 (Acceptable)
 
-Learnabilty Subscore:
+Learnabilty Subscore: 75
 
-Usability Subscore:
+Usability Subscore: 75
 
 ### SUS Testing #5
 
 Name: Anthony
 
-System Usability Scale Score:
+System Usability Scale Score: 90 (Acceptable)
 
-Learnabilty Subscore:
+Learnabilty Subscore: 100
 
-Usability Subscore:
+Usability Subscore: 71.875
 
 ### SUS Testing #6
 
 Name: Mya
 
-System Usability Scale Score:
+System Usability Scale Score: 87.5
 
-Learnabilty Subscore:
+Learnabilty Subscore: 100
 
-Usability Subscore:
+Usability Subscore: 65.625
 
 ### SUS Testing #7
 
