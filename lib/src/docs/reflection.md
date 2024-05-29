@@ -25,8 +25,6 @@ The challenges we faced were techincal topics. First, we wanted to figure out ho
 
 
 ## Accessibility and Usability
-Describe two areas of future work for your app, including how you could increase the accessibility and usability of this app
-
 For future work of our app, we would like to continue working with Google Gemini API and make sure our camera can detect food. After detecting food in the photos, we would like to work more on showing nutritional facts about the photos the users had taken. Furthermore, we would like to create a way to store the photos the users took in the app and able to look back the meals they ate in the History section. Besides the technical areas, we would like to improve the app interface and create a cleaner and sleeker design if have more time. Lastly, we would like to increase usability of this app by storing information about the user's physical health and diet in order to provide more ways and meals recommendations based on the user's lifestyle. To improve the accessibility of Food Focus, we would like to provide different modes such as dark and light mode and text resizing for people with vision disabilities. Furthermore, we would like to implement a Google Maps API so it would provide better navigation for users to know where to purchase their meals.
 
 ## Citations
@@ -35,4 +33,10 @@ The images in our app are from Google Images. Also, we referenced Stack Overflow
 ## Reflection Questions
 What do you feel was the most valuable thing you learned in CSE 340 that will help you beyond this class, and why?
 
+The most valuable thing we learned in CSE 340 was understanding how to create widgets and creating interactiving actions such as redoing, undoing, drawing, adding new widgets etc. Most of our perojcts allowed us to develop new skills in coding with Flutter such as learning how to use the location/GPS feature and storing information. Overall, being able to code fun features in our apps with Flutter is helpful to know and to use. Going beyond this class, we have a better understaning how to improve the accessiablity and usability in our future apps.
+
 If you could go back and give yourself 2-3 pieces of advice at the beginning of the class, what would you say and why? Alternatively: what 2-3 pieces of advice would you give to future students who take CSE 340 and why?
+
+An advice to give for future students who take CSE 340 would be starting on your work early and ask TA for help during OH. Since there is only an week to work on each app project, the class is fast-paced and you may not have enough time to finish the project. However, there are resubmissions, but you'll need to have time to fix your previous assignment while also working on the next app assignment. Thus, it's important to allocate your assignments and set time for yourself to work on CSE 340 assignments.
+
+Another advice is that the class would provide basic Flutter code to introduce you to new materials. However, you would need to research and take additional time outside of class to learn more on how to implement specific features in your app assignments. Overall, the class can be hard to keep up and you will need to take time to learn Flutter.
