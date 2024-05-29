@@ -29,27 +29,66 @@ class _CameraScreenState extends State<CameraScreen> {
     _initializeCamera();
   }
 
+  // Future<void> _initializeCamera() async {
+  //   final statusCam = await Permission.camera.request();
+  //   final statusMic = await Permission.microphone.request();
+  //   if (statusCam.isGranted && statusMic.isGranted) {
+  //     setState(() {
+  //       _isPermissionGrantedCamera = true;
+  //       _isPermissionGrantedMicrophone = true;
+  //     });
+  //     final cameras = await availableCameras();
+  //     if (cameras.isNotEmpty) {
+  //       controller = CameraController(cameras[0], ResolutionPreset.max);
+  //       _initializeControllerFuture = controller.initialize();
+  //       setState(() {});
+  //     }
+  //   } else {
+  //     setState(() {
+  //       _isPermissionGrantedCamera = false;
+  //       _isPermissionGrantedMicrophone = false;
+  //     });
+  //   }
+  // }
+
   Future<void> _initializeCamera() async {
-    final statusCam = await Permission.camera.request();
-    final statusMic = await Permission.microphone.request();
-    if (statusCam.isGranted && statusMic.isGranted) {
-      setState(() {
-        _isPermissionGrantedCamera = true;
-        _isPermissionGrantedMicrophone = true;
-      });
-      final cameras = await availableCameras();
-      if (cameras.isNotEmpty) {
-        controller = CameraController(cameras[0], ResolutionPreset.max);
-        _initializeControllerFuture = controller.initialize();
-        setState(() {});
-      }
-    } else {
-      setState(() {
-        _isPermissionGrantedCamera = false;
-        _isPermissionGrantedMicrophone = false;
-      });
+    setState(() {
+      _isPermissionGrantedCamera = true;
+      _isPermissionGrantedMicrophone = true;
+    });
+    final cameras = await availableCameras();
+    if (cameras.isNotEmpty) {
+      controller = CameraController(cameras[0], ResolutionPreset.max);
+      _initializeControllerFuture = controller.initialize();
+      setState(() {});
     }
   }
+
+  // Future<void> _initializeCamera() async {
+  //   final cameras = await availableCameras();
+  //   controller = CameraController(cameras[0], ResolutionPreset.max);
+  //   controller.initialize().then((_) {
+  //     if (!mounted) {
+  //       return;
+  //     }
+  //     setState(() {
+  //       _isPermissionGrantedCamera = true;
+  //       _isPermissionGrantedMicrophone = true;
+  //     });
+  //   }).catchError((Object e) {
+  //     if (e is CameraException) {
+  //       switch (e.code) {
+  //         case 'CameraAccessDenied':
+  //           // Handle access errors here.
+  //           break;
+  //         default:
+  //           // Handle other errors here.
+  //           break;
+  //       }
+  //       ;
+  //     }
+  //   });
+  // }
 
   @override
   void dispose() {
@@ -81,38 +120,38 @@ class _CameraScreenState extends State<CameraScreen> {
   //   }
   // }
 
-  Future<void> _entireOp() async {
-    XFile? picture = await _takePicture();
-    if (picture != null) {
-      await _storePicture(picture);
-    }
-    else {
-      print('Picture was null');
-    }
-  }
+  // Future<void> _entireOp() async {
+  //   XFile? picture = await _takePicture();
+  //   if (picture != null) {
+  //     await _storePicture(picture);
+  //   }
+  //   else {
+  //     print('Picture was null');
+  //   }
+  // }
 
-  Future<XFile?> _takePicture() async {
-    if (controller.value.isInitialized) {
-      XFile picture = await controller.takePicture();
-      print('takePicture is called');
-      return picture;
-    }
-    else {
-      return null;
-    }
-  }
+  // Future<XFile?> _takePicture() async {
+  //   if (controller.value.isInitialized) {
+  //     XFile picture = await controller.takePicture();
+  //     print('takePicture is called');
+  //     return picture;
+  //   }
+  //   else {
+  //     return null;
+  //   }
+  // }
 
-  Future<String> _storePicture(XFile picture) async {
-    print('Beginning of storePicture method');
-    final imageLocation = await getTemporaryDirectory();
-    print('getTemporaryDirectory has been called');
-    final imagePath = join(imageLocation.path, '${DateTime.now()}.png');
-    print(imagePath);
-    print('imagePath has been printed');
-    await picture.saveTo(imagePath);
-    print('Picture saved successfully');
-    return imagePath;
-  }
+  // Future<String> _storePicture(XFile picture) async {
+  //   print('Beginning of storePicture method');
+  //   final imageLocation = await getTemporaryDirectory();
+  //   print('getTemporaryDirectory has been called');
+  //   final imagePath = join(imageLocation.path, '${DateTime.now()}.png');
+  //   print(imagePath);
+  //   print('imagePath has been printed');
+  //   await picture.saveTo(imagePath);
+  //   print('Picture saved successfully');
+  //   return imagePath;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -150,7 +189,22 @@ class _CameraScreenState extends State<CameraScreen> {
                             child: Visibility(
                                 visible: controller.value.isInitialized,
                                 child: FloatingActionButton(
-                                  onPressed: /* ()=> */ _entireOp,
+                                  onPressed: () async {
+                                    try {
+                                      await _initializeControllerFuture;
+                                      final image =
+                                          await controller.takePicture();
+
+                                      if (!context.mounted) return;
+
+                                      await Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  displayPic(image)));
+                                    } catch (e) {
+                                      print(e);
+                                    }
+                                  },
                                   child: const Icon(Icons.camera_alt),
                                 )))),
                   ]);
@@ -163,5 +217,9 @@ class _CameraScreenState extends State<CameraScreen> {
               child: Text('Waiting for camera and microphone permissions...',
                   style: TextStyle(fontSize: 16))),
     );
+  }
+
+  Widget displayPic(XFile context) {
+    return Image.file(File(context.path));
   }
 }
