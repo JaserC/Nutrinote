@@ -29,9 +29,13 @@ class AboutScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   //Image from: https://medium.com/@lloydannagrds/getting-started-in-graphic-design-a-beginners-guide-0cf5259f1e52
-                  Center(
-                      child:
-                          Image.asset('assets/images/about.png', width: 200)),
+                  Semantics(
+                    label: '3d food graphic',
+                    child: Center(
+                        child:
+                            Image.asset('assets/images/about.png', width: 200)),
+                  ),
+                  const SizedBox(height: 10.0),
                   const Text(
                     "THE HUMBLE",
                     style: TextStyle(
@@ -59,6 +63,7 @@ class AboutScreen extends StatelessWidget {
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w200),
                   ),
+                  const SizedBox(height: 15.0),
                   const Text("WHAT WE DO",
                       style: TextStyle(
                           color: Colors.black,
@@ -66,21 +71,24 @@ class AboutScreen extends StatelessWidget {
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w900)),
                   const Text(
-                    'At Food Focus, we empower users with insight into the food they put in their body and provide them the tools to keep track of their wellbeing. nutritional information of the food they consume on a daily basis. Along with this comes the ability to keep track of what, when, and where you eat. The home screen features meals for you to try out with information about the nutrition facts. You are welcomed to use our search feature to learn about different food nutritional information. We are committed to , which we have proven with our suite of tools available to our users, including our curated search possibilities and 1-snap guarantee',
+                    'At Food Focus, we empower users with insight into the food they put in their body and provide them the tools to keep track of their wellbeing. Here at Food Focus, everything about food is just a picture away!',
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 20.0,
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w200),
                   ),
-                  const SizedBox(height: 4.0),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(
-                        12.0), // Rounded corners for the image
-                    child: Image.asset(
-                      'assets/images/team.jpg', // Path to your image
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      fit: BoxFit.cover, // Adjust the image size
+                  const SizedBox(height: 15.0),
+                  Semantics(
+                    label: 'Image of Food Focus team',
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(
+                          12.0), // Rounded corners for the image
+                      child: Image.asset(
+                        'assets/images/team.jpg', // Path to your image
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        fit: BoxFit.cover, // Adjust the image size
+                      ),
                     ),
                   ),
                   const Text("MEET THE TEAM",
@@ -89,6 +97,22 @@ class AboutScreen extends StatelessWidget {
                           fontSize: 40.0,
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w900)),
+                  const Text(
+                    'Left to right: Isabelle, Betty, Jaser, Thomas',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20.0,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w200),
+                  ),
+                  const Text(
+                    'Each member of our team has been integral to the design and implementation of our project. Special credit to Betty and Isabelle for handling logistics in addition to views, Thomas for building out core functionality, and Jaser for backend processes.',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15.0,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w600),
+                  ),
                 ],
               ),
             ),

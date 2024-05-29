@@ -49,13 +49,17 @@ flutter:
         - asset: assets/Montserrat/static/Montserrat-Bold.ttf
           weight: 700
 
+    - family: Shantell Sans
+      fonts:
+        - asset: assets/Shantell_Sans/static/ShantellSans-Regular.ttf
+        - asset: assets/Shantell_Sans/static/ShantellSans-BoldItalic.ttf
+          style: italic
+
     - family: Roboto
       fonts:
         - asset: assets/Roboto/Roboto-Thin.ttf
           weight: 100
         - asset: assets/Roboto/Roboto-Regular.ttf
-        - asset: assets/Roboto/Roboto-Bold.ttf
-          weight: 700
 
   # Enable generation of localized Strings from arb files.
   generate: true
