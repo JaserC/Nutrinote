@@ -64,36 +64,38 @@ class _SearchScreenState extends State<SearchScreen> {
           ]),
           backgroundColor: Colors.white,
           elevation: 0.0),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextField(
-                onChanged: (value) => updateList(value),
-                style: TextStyle(color: Colors.black),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
+      body: Expanded(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  onChanged: (value) => updateList(value),
+                  style: TextStyle(color: Colors.black),
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    hintText: "eg. chicken",
+                    hintStyle: TextStyle(color: Colors.grey),
+                    prefixIcon: const Icon(Icons.search),
+                    prefixIconColor: Colors.grey,
                   ),
-                  hintText: "eg. chicken",
-                  hintStyle: TextStyle(color: Colors.grey),
-                  prefixIcon: const Icon(Icons.search),
-                  prefixIconColor: Colors.grey,
                 ),
-              ),
-              const SizedBox(height: 20),
-              Expanded(
-                  child: ListView.builder(
-                itemCount: displayList.length,
-                itemBuilder: (context, index) => FoodItem(
-                  mealName: displayList[index].mealName,
-                  mealImagePath: displayList[index].mealImagePath,
-                  nutritionFacts: displayList[index].nutritionFacts,
-                ),
-              )),
-            ]),
+                const SizedBox(height: 20),
+                Expanded(
+                    child: ListView.builder(
+                  itemCount: displayList.length,
+                  itemBuilder: (context, index) => FoodItem(
+                    mealName: displayList[index].mealName,
+                    mealImagePath: displayList[index].mealImagePath,
+                    nutritionFacts: displayList[index].nutritionFacts,
+                  ),
+                )),
+              ]),
+        ),
       ),
     );
   }

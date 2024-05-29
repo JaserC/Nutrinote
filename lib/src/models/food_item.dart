@@ -113,9 +113,10 @@ class PreviousItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Image mealPic = mealImagePath.startsWith('/data')
-        ? Image.file(File(mealImagePath))
-        : Image.asset(mealImagePath, fit: BoxFit.cover);
+    Image mealPic = mealImagePath.startsWith('assets/')
+        ? Image.asset(mealImagePath, fit: BoxFit.cover, width: 300, height: 200)
+        : Image.file(File(mealImagePath),
+            fit: BoxFit.cover, width: 300, height: 200);
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -129,32 +130,36 @@ class PreviousItem extends StatelessWidget {
           ),
         );
       },
-      child: Column(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(15),
-            child: SizedBox.fromSize(
-              size: const Size.fromRadius(40), // Image radius
-              child: mealPic,
+      child: Expanded(
+        child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: SizedBox.fromSize(
+                size: const Size.fromRadius(40), // Image radius
+                child: mealPic,
+              ),
             ),
-          ),
-          Text(
-            mealName,
-            style: const TextStyle(
-                color: Colors.green, fontWeight: FontWeight.bold, fontSize: 12),
-            textAlign: TextAlign.center,
-          ),
-          Text(
-            _formatDateTime(dateTime),
-            style: TextStyle(color: Colors.green[300], fontSize: 10),
-            textAlign: TextAlign.center,
-          ),
-          Text(
-            (location != null) ? location.toString() : 'No Location',
-            style: TextStyle(color: Colors.green[300], fontSize: 8),
-            textAlign: TextAlign.center,
-          ),
-        ],
+            Text(
+              mealName,
+              style: const TextStyle(
+                  color: Colors.green,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12),
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              _formatDateTime(dateTime),
+              style: TextStyle(color: Colors.green[300], fontSize: 10),
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              (location != null) ? location.toString() : 'No Location',
+              style: TextStyle(color: Colors.green[300], fontSize: 8),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -178,10 +183,9 @@ class MealDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Image mealPic = mealImagePath.startsWith('/data')
-        ? Image.file(File(mealImagePath),
-            fit: BoxFit.cover, width: 300, height: 200)
-        : Image.asset(mealImagePath,
+    Image mealPic = mealImagePath.startsWith('assets/')
+        ? Image.asset(mealImagePath, fit: BoxFit.cover, width: 300, height: 200)
+        : Image.file(File(mealImagePath),
             fit: BoxFit.cover, width: 300, height: 200);
     return Consumer<HistoryProvider>(
         builder: (context, historyProvider, unchangingChild) {
@@ -203,34 +207,36 @@ class MealDetailScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text(mealName),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(child: mealPic),
-              const SizedBox(height: 20),
-              Text(
-                mealName,
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                'Nutrition Facts',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              SizedBox(
-                height: 30,
-                child: Text(nutritionFacts[0]),
-              ),
-              SizedBox(
-                height: 30,
-                child: Text(nutritionFacts[1]),
-              ),
-              SizedBox(height: 30, child: Text(nutritionFacts[2]))
-            ],
+        body: Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(child: mealPic),
+                const SizedBox(height: 20),
+                Text(
+                  mealName,
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  'Nutrition Facts',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                SizedBox(
+                  height: 30,
+                  child: Text(nutritionFacts[0]),
+                ),
+                SizedBox(
+                  height: 30,
+                  child: Text(nutritionFacts[1]),
+                ),
+                SizedBox(height: 30, child: Text(nutritionFacts[2]))
+              ],
+            ),
           ),
         ),
       );
