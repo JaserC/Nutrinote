@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:food_focus/src/models/food_item.dart';
 import 'package:food_focus/src/providers/history_provider.dart';
 import 'package:food_focus/src/utils/gemini.dart';
 import 'package:path/path.dart';
@@ -193,14 +194,20 @@ class _CameraScreenState extends State<CameraScreen> {
                                     final image =
                                         await controller.takePicture();
 
-                                    String responseParse =
-                                        Gemini.identifyImage(image).toString();
+                                    String response =
+                                        await Gemini.identifyImage(image);
+                                    String responseParse = response.toString();
 
                                     List<String> responseTokens =
                                         responseParse.split('\n');
                                     String foodName = responseTokens[0];
                                     List<String> nutritionalInfo =
-                                        responseTokens.sublist(2);
+                                        responseTokens.sublist(1);
+
+                                    provider.add(FoodItem(
+                                        mealName: foodName,
+                                        mealImagePath: image.path,
+                                        nutritionFacts: nutritionalInfo));
 
                                     if (!context.mounted) return;
 
@@ -227,7 +234,9 @@ class _CameraScreenState extends State<CameraScreen> {
     return Center(
       child: Column(
         children: [
-          Image.asset('assets/images/error.gif'),
+          Semantics(
+              label: 'A gif of a compass turning',
+              child: Image.asset('assets/images/error.gif')),
           const Text("Uh Oh!",
               style: TextStyle(
                   fontFamily: 'Shantell Sans',
