@@ -22,24 +22,43 @@ class LanguageScreen extends StatelessWidget {
           elevation: 0.0),
       body: Consumer<LanguageProvider>(builder: (context, provider, child) {
         return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Text("Pick a language",
                 style: TextStyle(
                     fontSize: 24,
                     fontFamily: 'Montserrat',
                     fontWeight: FontWeight.w800)),
-            _createLanguageTile(
-                'English', 'assets/images/flags/us.jpg', provider),
-            _createLanguageTile(
-                'Chinese', 'assets/images/flags/china.png', provider),
-            _createLanguageTile(
-                'Spanish', 'assets/images/flags/spain.png', provider),
-            _createLanguageTile(
-                'Hindi', 'assets/images/flags/india.png', provider),
-            _createLanguageTile(
-                'French', 'assets/images/flags/france.png', provider),
-            _createLanguageTile(
-                'Russian', 'assets/images/flags/russia.png', provider),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _createLanguageTile(
+                    'English', 'assets/images/flags/us.jpg', provider),
+                const SizedBox(width: 10.0),
+                _createLanguageTile(
+                    'Chinese', 'assets/images/flags/china.png', provider),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _createLanguageTile(
+                    'Spanish', 'assets/images/flags/spain.png', provider),
+                const SizedBox(width: 10.0),
+                _createLanguageTile(
+                    'Hindi', 'assets/images/flags/india.png', provider),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _createLanguageTile(
+                    'French', 'assets/images/flags/france.png', provider),
+                const SizedBox(width: 10.0),
+                _createLanguageTile(
+                    'Russian', 'assets/images/flags/russia.png', provider),
+              ],
+            ),
           ],
         );
       }),
@@ -63,14 +82,15 @@ class LanguageScreen extends StatelessWidget {
     return Semantics(
       label: label,
       child: Container(
-        height: 55,
-        width: 120,
-        margin: EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0, bottom: 8.0),
+        height: 65,
+        width: 140,
+        margin:
+            const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0, bottom: 8.0),
         child: Material(
           color: bgColor,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
-              side: BorderSide(color: Colors.black, width: 3.0)),
+              side: const BorderSide(color: Colors.black, width: 3.0)),
           child: InkWell(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -80,8 +100,8 @@ class LanguageScreen extends StatelessWidget {
                       5.0), // Rounded corners for the image
                   child: Image.asset(
                     filePath, // Path to your image
-                    width: 55.0,
-                    height: 30.0,
+                    width: 35.0,
+                    height: 20.0,
                     fit: BoxFit.cover, // Adjust the image size
                   ),
                 ),
@@ -90,8 +110,9 @@ class LanguageScreen extends StatelessWidget {
                   language,
                   style: TextStyle(
                       color: txtColor,
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w500),
+                      fontSize: 18.0,
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w600),
                 ),
               ],
             ),
