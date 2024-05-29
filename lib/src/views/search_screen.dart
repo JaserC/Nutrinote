@@ -10,24 +10,45 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  Future<bool> _handleLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
 
-  final TextEditingController _controller = TextEditingController();
-  final FocusNode _focusNode = FocusNode();
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    _focusNode.dispose();
-    super.dispose();
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location services are disabled. Please enable the services')));
+      return false;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Location permissions are denied')));
+        return false;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location permissions are permanently denied, we cannot request permissions.')));
+      return false;
+    }
+    return true;
   }
 
   List<FoodItem> displayList = List.from(foods);
 
-  void updateList (String value) {
+  void updateList(String value) {
     //filtering our list
     setState(() {
-      displayList = foods.where((element) => element.mealName.toLowerCase().contains(value.toLowerCase())).toList();
-      });
+      displayList = foods
+          .where((element) =>
+              element.mealName.toLowerCase().contains(value.toLowerCase()))
+          .toList();
+    });
   }
 
   @override
@@ -35,30 +56,25 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Row(
-          children: [
-          Image.asset('assets/images/food_focus_logo.png', width: 40, height: 40),
-          const SizedBox(width: 10),    
-          const Text("Food Focus", style: TextStyle(color: Colors.green)), ]
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0.0
-      ),
+          title: Row(children: [
+            Image.asset('assets/images/food_focus_logo.png',
+                width: 40, height: 40),
+            const SizedBox(width: 10),
+            const Text("Food Focus", style: TextStyle(color: Colors.green)),
+          ]),
+          backgroundColor: Colors.white,
+          elevation: 0.0),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
-          mainAxisAlignment:  MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               TextField(
-                controller: _controller,
-                focusNode: _focusNode,
-                onTap: ()  => _focusNode.requestFocus(), 
-                canRequestFocus: true,
                 onChanged: (value) => updateList(value),
                 style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
-                  border:OutlineInputBorder(
+                  border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   hintText: "eg. chicken",
@@ -69,16 +85,15 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               const SizedBox(height: 20),
               Expanded(
-                child: ListView.builder(
-                  itemCount: displayList.length,
-                  itemBuilder: (context,index) => FoodItem(
-                    mealName: displayList[index].mealName,
-                    mealImagePath: displayList[index].mealImagePath,
-                    nutritionFacts: displayList[index].nutritionFacts,
-                  ),
-                  )
-              ),
-          ]),
+                  child: ListView.builder(
+                itemCount: displayList.length,
+                itemBuilder: (context, index) => FoodItem(
+                  mealName: displayList[index].mealName,
+                  mealImagePath: displayList[index].mealImagePath,
+                  nutritionFacts: displayList[index].nutritionFacts,
+                ),
+              )),
+            ]),
       ),
     );
   }
