@@ -28,7 +28,7 @@ Within a particular ecosystem, there may be a common way of installing things, s
 Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
 ## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+In the profile section of our app, users can see commonly asked questions and learn more about how to use this application. There are also guides on what to do in case of problems, such as in a scenario where a user is having trouble with taking a photo of their meal. 
 
 ## Roadmap
 If you have ideas for releases in the future, it is a good idea to list them in the README.

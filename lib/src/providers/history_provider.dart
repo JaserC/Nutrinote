@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:food_focus/src/models/food_item.dart';
 import 'package:food_focus/src/utils/uuid_generator.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:hive/hive.dart';
+import 'package:logger/logger.dart';
 
 class HistoryProvider extends ChangeNotifier {
   final Box<PreviousItem> _pastFoods;
@@ -16,13 +18,13 @@ class HistoryProvider extends ChangeNotifier {
   Future<void> add(FoodItem item) async {
     UUIDString uuid = UUIDMaker.generateUUID();
     try {
-      Position position = await getCurrentLocation();
+      String position = await getCurrentLocation();
       _pastFoods.put(uuid, PreviousItem(
         mealName: item.mealName,
         mealImagePath: item.mealImagePath,
         nutritionFacts: item.nutritionFacts,
         dateTime: DateTime.now(),
-        location: position.toString(),
+        location: position,
         uuid: uuid,
       ));
       notifyListeners();
@@ -40,7 +42,7 @@ class HistoryProvider extends ChangeNotifier {
   }
 
   // Method to get the current location
-  Future<Position> getCurrentLocation() async {
+  Future<String> getCurrentLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -65,7 +67,26 @@ class HistoryProvider extends ChangeNotifier {
 
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
-    return await Geolocator.getCurrentPosition();
+    
+    Position position = await Geolocator.getCurrentPosition();
+
+    String? address = await _getAddressFromLatLng(position);
+
+    return address ?? 'Unknown';
+  }
+
+  Future<String?> _getAddressFromLatLng(Position position) async {
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
+      if (placemarks.isNotEmpty) {
+        Placemark place = placemarks[0];
+        return "${place.name}, ${place.locality}, ${place.administrativeArea}";
+      }
+    } catch (e) {
+      var logger = Logger();
+      logger.w("Address unavailable");
+    }
+    return null;
   }
   
 }
