@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+//This page is to show off the team responsible for Food Focus!
+//Everyone had fun working on the project (I think) and so we wanted a page detailing the experience
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
 
@@ -29,6 +31,7 @@ class AboutScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   //Image from: https://medium.com/@lloydannagrds/getting-started-in-graphic-design-a-beginners-guide-0cf5259f1e52
+                  //Little graphic for a bit of visual flair
                   Semantics(
                     label: '3d food graphic',
                     child: Center(
@@ -36,6 +39,7 @@ class AboutScreen extends StatelessWidget {
                             Image.asset('assets/images/about.png', width: 200)),
                   ),
                   const SizedBox(height: 10.0),
+                  //Discussion of how the app idea started
                   const Text(
                     "THE HUMBLE",
                     style: TextStyle(
@@ -64,6 +68,7 @@ class AboutScreen extends StatelessWidget {
                         fontWeight: FontWeight.w200),
                   ),
                   const SizedBox(height: 15.0),
+                  //Discussion into how the app works and what we provide a user
                   const Text("WHAT WE DO",
                       style: TextStyle(
                           color: Colors.black,
@@ -79,6 +84,7 @@ class AboutScreen extends StatelessWidget {
                         fontWeight: FontWeight.w200),
                   ),
                   const SizedBox(height: 15.0),
+                  //A picture of the team and giving credit to each member
                   Semantics(
                     label: 'Image of Food Focus team',
                     child: ClipRRect(
@@ -106,7 +112,7 @@ class AboutScreen extends StatelessWidget {
                         fontWeight: FontWeight.w200),
                   ),
                   const Text(
-                    'Each member of our team has been integral to the design and implementation of our project. Special credit to Betty and Isabelle for handling logistics in addition to views, Thomas for building out core functionality, and Jaser for backend processes.',
+                    'Each member of our team has been integral to the design and implementation of our project. Special credit to Betty and Isabelle for handling logistics in addition to implementing views, Thomas for building out core functionality, and Jaser for backend processes.',
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 15.0,

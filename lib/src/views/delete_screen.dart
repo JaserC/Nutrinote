@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+//This screen is to mock the UX for when a user wants to delete their account and the data associated with it (minimalistic)
+//This is a mock screen, not functionality, used to demonstrate how it would be on a page
 class DeleteScreen extends StatelessWidget {
   const DeleteScreen({super.key});
 

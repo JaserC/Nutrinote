@@ -7,9 +7,12 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 //https://ai.google.dev/gemini-api/docs/get-started/tutorial?lang=dart#flutter
 //https://ai.google.dev/gemini-api/docs/api-overview#dart-flutter
 
+//This is where the magic happens!
+//This class takes an Xfile, processes the file at the path end into bytes, and serves it up to Google Gemini for classification
+//After classification, this response will be parsed into a Food object that we can display to the user
 class Gemini {
   static Future identifyImage(XFile image) async {
-    //final apiKey = Platform.environment['GEMINI_API_KEY'];
+    //This api key is stored in a file not committed to git
     const apiKey = Apikey.key;
     if (apiKey == null) {
       print('No \$API_KEY environment variable');
@@ -27,11 +30,6 @@ class Gemini {
     """;
     final imageBytes = await image.readAsBytes();
 
-    // final (catBytes, sconeBytes) = await (
-    //   readResource('cat.jpg'),
-    //   readResource('scones.jpg'),
-    // ).wait;
-
     final content = [
       Content.multi([
         TextPart(prompt),
@@ -39,8 +37,9 @@ class Gemini {
       ])
     ];
 
-    final response = await model.generateContent(content);
+    final response = await model.generateContent(
+        content); //Send the model a request with the prompt and encoded image
 
-    return response.text;
+    return response.text; //Return the text field of the response JSON
   }
 }
