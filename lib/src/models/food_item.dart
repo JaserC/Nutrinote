@@ -54,10 +54,13 @@ class FoodItem extends StatelessWidget {
             padding: const EdgeInsets.all(4), // Border width
             decoration: BoxDecoration(
                 color: Colors.yellow[100], shape: BoxShape.circle),
-            child: ClipOval(
-              child: SizedBox.fromSize(
-                size: const Size.fromRadius(40), // Image radius
-                child: Image.asset(mealImagePath, fit: BoxFit.cover),
+            child: Semantics(
+              label: '$mealName picture',
+              child: ClipOval(
+                child: SizedBox.fromSize(
+                  size: const Size.fromRadius(40), // Image radius
+                  child: Image.asset(mealImagePath, fit: BoxFit.cover),
+                ),
               ),
             ),
           ),
@@ -114,9 +117,8 @@ class PreviousItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Image mealPic = mealImagePath.startsWith('assets/')
-        ? Image.asset(mealImagePath, fit: BoxFit.cover, width: 300, height: 200)
-        : Image.file(File(mealImagePath),
-            fit: BoxFit.cover, width: 300, height: 200);
+        ? Image.asset(mealImagePath, fit: BoxFit.cover, height: 200)
+        : Image.file(File(mealImagePath), fit: BoxFit.cover, height: 200);
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -130,35 +132,41 @@ class PreviousItem extends StatelessWidget {
           ),
         );
       },
-      child: Expanded(
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: SizedBox.fromSize(
-                size: const Size.fromRadius(40), // Image radius
-                child: mealPic,
+      child: Semantics(
+        label: 'History entry for $mealName',
+        child: Expanded(
+          child: Column(
+            children: [
+              Semantics(
+                label: '$mealName picture',
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: SizedBox.fromSize(
+                    size: const Size.fromRadius(40), // Image radius
+                    child: mealPic,
+                  ),
+                ),
               ),
-            ),
-            Text(
-              mealName,
-              style: const TextStyle(
-                  color: Colors.green,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12),
-              textAlign: TextAlign.center,
-            ),
-            Text(
-              _formatDateTime(dateTime),
-              style: TextStyle(color: Colors.green[300], fontSize: 10),
-              textAlign: TextAlign.center,
-            ),
-            Text(
-              (location != null) ? location.toString() : 'No Location',
-              style: TextStyle(color: Colors.green[300], fontSize: 8),
-              textAlign: TextAlign.center,
-            ),
-          ],
+              Text(
+                mealName,
+                style: const TextStyle(
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12),
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                _formatDateTime(dateTime),
+                style: TextStyle(color: Colors.green[300], fontSize: 10),
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                (location != null) ? location.toString() : 'No Location',
+                style: TextStyle(color: Colors.green[300], fontSize: 8),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -184,9 +192,8 @@ class MealDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Image mealPic = mealImagePath.startsWith('assets/')
-        ? Image.asset(mealImagePath, fit: BoxFit.cover, width: 300, height: 200)
-        : Image.file(File(mealImagePath),
-            fit: BoxFit.cover, width: 300, height: 200);
+        ? Image.asset(mealImagePath, fit: BoxFit.cover, height: 300)
+        : Image.file(File(mealImagePath), fit: BoxFit.cover, height: 300);
     return Consumer<HistoryProvider>(
         builder: (context, historyProvider, unchangingChild) {
       return Scaffold(
@@ -213,7 +220,8 @@ class MealDetailScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Center(child: mealPic),
+                Semantics(
+                    label: '$mealPic picture', child: Center(child: mealPic)),
                 const SizedBox(height: 20),
                 Text(
                   mealName,
@@ -226,15 +234,15 @@ class MealDetailScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10),
-                SizedBox(
-                  height: 30,
-                  child: Text(nutritionFacts[0]),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: nutritionFacts
+                      .map((fact) => SizedBox(
+                            height: 30,
+                            child: Text(fact),
+                          ))
+                      .toList(),
                 ),
-                SizedBox(
-                  height: 30,
-                  child: Text(nutritionFacts[1]),
-                ),
-                SizedBox(height: 30, child: Text(nutritionFacts[2]))
               ],
             ),
           ),
