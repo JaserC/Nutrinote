@@ -1,12 +1,8 @@
 import 'dart:io';
-
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:food_focus/src/providers/history_provider.dart';
 import 'package:food_focus/src/utils/uuid_generator.dart';
-// import 'package:geolocator/geolocator.dart';
+import 'package:food_focus/src/views/meal_detail_screen.dart';
 import 'package:hive/hive.dart';
-import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
 part 'food_item.g.dart';
@@ -170,86 +166,12 @@ class PreviousItem extends StatelessWidget {
     );
   }
 
+  //Formats date and time YEAR_ABBR_MONTH_WEEKDAY_DAY eg (Wed, May 29, 2024 2:48PM)
   _formatDateTime(DateTime when) {
-    return DateFormat.yMd().add_jm().format(when);
+    return DateFormat.yMMMEd('en_US').add_jm().format(when);
   }
 }
 
-// Class to represent the detailed view of a meal, navigated to from other screens.
-class MealDetailScreen extends StatelessWidget {
-  final String mealName;
-  final String mealImagePath;
-  final List<String> nutritionFacts;
-
-  const MealDetailScreen({
-    required this.mealName,
-    required this.mealImagePath,
-    required this.nutritionFacts,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    Image mealPic = mealImagePath.startsWith('assets/')
-        ? Image.asset(mealImagePath, fit: BoxFit.cover, height: 300)
-        : Image.file(File(mealImagePath), fit: BoxFit.cover, height: 300);
-    return Consumer<HistoryProvider>(
-        builder: (context, historyProvider, unchangingChild) {
-      return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            historyProvider.add(FoodItem(
-                mealName: mealName,
-                mealImagePath: mealImagePath,
-                nutritionFacts: nutritionFacts));
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text('Item Added!'),
-              backgroundColor: Colors.green,
-            ));
-          },
-          backgroundColor: Colors.greenAccent,
-          child: const Icon(Icons.add),
-        ),
-        appBar: AppBar(
-          title: Text(mealName),
-        ),
-        body: Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Semantics(
-                    label: '$mealPic picture', child: Center(child: mealPic)),
-                const SizedBox(height: 20),
-                Text(
-                  mealName,
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 20),
-                const Text(
-                  'Nutrition Facts',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: nutritionFacts
-                      .map((fact) => SizedBox(
-                            height: 30,
-                            child: Text(fact),
-                          ))
-                      .toList(),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    });
-  }
-}
 
 //Hard coded items for search screen
 List<FoodItem> foods = [

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:food_focus/src/models/food_item.dart';
-import 'package:food_focus/src/providers/history_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:food_focus/src/views/meal_detail_screen.dart';
 
+// Stateless widget for HomeScreen which displays featured and recommended meals.
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
@@ -109,6 +108,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
+              // Section for Featured Meals heading.
               Semantics(
                 label: 'Featured Meals Heading',
                 child: const Text(
@@ -117,6 +117,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
+              // Scrollable list to display featured meals horizontally.
               SizedBox(
                 height: 200,
                 child: ListView.builder(
@@ -142,6 +143,7 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 10),
               SizedBox(
                 height: 200,
+              // Scrollable list to display recommended meals horizontally.
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: recommendedMeals.length,
@@ -162,11 +164,13 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+// MealTile is a reusable widget to display individual meal information.
 class MealTile extends StatelessWidget {
   final String mealName;
   final String mealImage;
   final List<String> nutritionFacts;
 
+  // Constructor with required parameters for meal name, image, and nutrition facts.
   const MealTile({
     required this.mealName,
     required this.mealImage,
@@ -177,13 +181,14 @@ class MealTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      // Tapping on the tile navigates to the screen with meal details (from food_item.dart)
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => MealDetailScreen(
               mealName: mealName,
-              mealImage: mealImage,
+              mealImagePath: mealImage,
               nutritionFacts: nutritionFacts,
             ),
           ),
@@ -194,6 +199,7 @@ class MealTile extends StatelessWidget {
         hint: 'Tap to view details',
         child: Column(
           children: [
+            // Meal image displayed with rounded corners.
             Container(
               width: 150,
               height: 150,
@@ -213,6 +219,7 @@ class MealTile extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 5),
+            // Meal name displayed below the image.
             Semantics(
               label: 'Meal name $mealName',
               child: Text(
@@ -226,92 +233,6 @@ class MealTile extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class MealDetailScreen extends StatelessWidget {
-  final String mealName;
-  final String mealImage;
-  final List<String> nutritionFacts;
-
-  const MealDetailScreen({
-    required this.mealName,
-    required this.mealImage,
-    required this.nutritionFacts,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          final historyProvider =
-              Provider.of<HistoryProvider>(context, listen: false);
-          historyProvider.add(FoodItem(
-              mealName: mealName,
-              mealImagePath: mealImage,
-              nutritionFacts: nutritionFacts));
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Item Added!'),
-            backgroundColor: Colors.green,
-          ));
-        },
-        backgroundColor: Colors.greenAccent,
-        child: const Icon(Icons.add),
-      ),
-      appBar: AppBar(
-        title: Text(mealName),
-      ),
-      body: Expanded(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Image.asset(
-                  mealImage,
-                  width: 300,
-                  height: 200,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(height: 20),
-              Semantics(
-                label: 'Meal name $mealName',
-                child: Text(
-                  mealName,
-                  style: const TextStyle(
-                      fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-              ),
-              const SizedBox(height: 20),
-              Semantics(
-                label: 'Nutrition Facts Heading',
-                child: const Text(
-                  'Nutrition Facts',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ),
-              const SizedBox(height: 10),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: nutritionFacts
-                    .map((fact) => Semantics(
-                          label: 'Nutrition fact $fact',
-                          child: Text(
-                            fact,
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                        ))
-                    .toList(),
-              ),
-            ],
-          ),
         ),
       ),
     );

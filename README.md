@@ -8,6 +8,8 @@ For Food Focus, users can take a pictures of their meals that their eating and t
 ## Data Design and Data Flow
 Describe the data structures you designed to hold user data, and how you architected your app to use Providers (or another framework, like Bloc) to propagate changes to these data in a reactive way.
 
+Our Flutter application is structured such that the models directory contains definitions for data objects such as FoodItem which contains models for the different views to represent our foods. State management is centralized in the providers directory, where HistoryProvider manages user's previous food entries and LanguageProvider is preapred to handle language settings (however not fully implemented), both using Flutter's provider pattern to propagate changes reactively across the app. The utils directory includes essential utilities like API keys and UUID generation. Each screen of the app, located under the views directory, is responsible for different functionalities, such as user accounts(not fully implemented), home screen, searching, history, and camera integration, and reacts to state changes from providers to update these pages. 
+  
 ## Badges
 On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
 
