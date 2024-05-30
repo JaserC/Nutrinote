@@ -10,6 +10,8 @@ import 'package:settings_ui/settings_ui.dart';
 
 // https://www.dhiwise.com/post/crafting-the-ultimate-settings-ui-in-flutter
 
+// This screen is the structure/scaffolding for a settings page
+// From this screen, we can push new views into the screen and allow users to change settings
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key});
 
@@ -29,6 +31,7 @@ class ProfileScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0.0,
       ),
+      //This is the general settings section
       body: SettingsList(
         sections: [
           SettingsSection(
@@ -62,6 +65,7 @@ class ProfileScreen extends StatelessWidget {
               ),
             ],
           ),
+          //This is the accessibility section of the settings
           SettingsSection(
             title: const Text('Accessibility'),
             tiles: [
@@ -94,6 +98,7 @@ class ProfileScreen extends StatelessWidget {
               ),
             ],
           ),
+          //These are some miscallaneous settings / information pages
           SettingsSection(
             title: const Text('Other'),
             tiles: [

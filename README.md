@@ -8,13 +8,9 @@ For Food Focus, users can take a pictures of their meals that their eating and t
 ## Data Design and Data Flow
 Describe the data structures you designed to hold user data, and how you architected your app to use Providers (or another framework, like Bloc) to propagate changes to these data in a reactive way.
 
-Our Flutter application is structured such that the models directory contains definitions for data objects such as FoodItem which contains models for the different views to represent our foods. State management is centralized in the providers directory, where HistoryProvider manages user's previous food entries and LanguageProvider is preapred to handle language settings (however not fully implemented), both using Flutter's provider pattern to propagate changes reactively across the app. The utils directory includes essential utilities like API keys and UUID generation. Each screen of the app, located under the views directory, is responsible for different functionalities, such as user accounts(not fully implemented), home screen, searching, history, and camera integration, and reacts to state changes from providers to update these pages. 
-  
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+Our Flutter application is structured such that the models directory contains definitions for data objects such as FoodItem which contains models for the different views to represent our foods. State management is centralized in the providers directory, where HistoryProvider manages user's previous food entries and LanguageProvider is prepared to handle language settings (however not fully implemented), both using Flutter's provider pattern to propagate changes reactively across the app. We use these providers to reflect new food pictures that users may want to add to their history. These upserts are referenced both in the camera screen after a Future and in the search screen, where any item from our dummy data can be upserted into the global data store. 
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+Additionally, the utils directory includes essential utilities like API keys and UUID generation. Each screen of the app, located under the views directory, is responsible for different functionalities, such as user accounts(not fully implemented), home screen, searching, history, and camera integration, and reacts to state changes from providers to update these pages. 
 
 ## How to Use
 Explain how to build and run the project, as well as the layout of your project structure (what files/classes implement what functionality).
@@ -23,30 +19,27 @@ Our application works solely for Android mobile devices. IOS mobile devices can 
 
 With that said, our app also has an API key that is neccessary that is stored in a static class. This file has been linked in an edstem post by Jaser Chowdhury called "Group 18 API Key (Final Project Submission)" - This is post #461. The file is called apiKey.dart, and instructions are on that post about how to use it.  
 
+To run the application, clone the repository and run a simple flutter run to pull the dependencies. Outside of getting the API key file,there are no special build steps or anything of the sort. While running the application, you will be prompted for permissions. In these cases, please accept. For the sake of robustness, we have produced error handling for the scenarios in which you don't, but the full user experience comes from enabling all permissions. 
+
+For layout, we have all of our views stored in a views folder. These implement the different screens you will see as you navigate through the application. We have a utils folder as well that holds some key functionality, such as a method to query the API for image classification or a UUID generator that our secure storage relies on. We have 2 more folders that are interrelated: providers and models. These folders set the structure for saved information, such as what information needs to be in Food Elements and how to update the state across the application. 
+
 ## Installation
 Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+We do not have any special install instructions or command line prompts. If you have used flutter before, then you already know how to run our flutter application right out of the box. 
 
 ## Support
 In the profile section of our app, users can see commonly asked questions and learn more about how to use this application. There are also guides on what to do in case of problems, such as in a scenario where a user is having trouble with taking a photo of their meal. 
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+Here, we would like to elaborate on some possible edge cases. With the functionality of saving a food to your history, there are 2 different ways. When going through the search screen, for when you want to note a food you'd like to try or just didn't have the ability to take a picture in the moment, you can add to the provider from there. You might be queried for location permissions in this instance, in which case please accept. If you do not, then we will display "No location" for your meal pictures history. 
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+For the camera, you may take a picture and recieve no response from the application. Because so much is running in the backend, please be patient and wait a few seconds for the image preview to pop up. Nothing has broken, nor has anything gone wrong - It's just a tad slow. When taking a picture, you may also find an error message on the Camera tab. If this is the case, a solution is already proposed, but we will reiterate that we do need permissions here so please manually enable them if you have declined them.  
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
 
 ## Authors and acknowledgment
 Isabelle Valena Tinsley, Jaser Chowdhury, Thomas Chen, Betty Cheng and help from the CSE 340 Course Staff.
 
-## License
-For open source projects, say how it is licensed.
-
 ## Project status
 If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+
+This app came at 0 monetary cost and the MVP has already been constructed. The final version of the application we are submitting is a middle-ground between the bare minimum functionality and a fully-fleshed out app (hence why some pages may have placeholders).

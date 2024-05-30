@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+//This is a placeholder mock screen to represent a potential account screen for users
+//In a fully fleshed out application, users may want to change preferences, permissions, etc.
 class AccountScreen extends StatelessWidget {
   const AccountScreen({super.key});
 

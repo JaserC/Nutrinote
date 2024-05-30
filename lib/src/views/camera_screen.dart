@@ -83,14 +83,21 @@ class _CameraScreenState extends State<CameraScreen> {
                 return Stack(children: [
                   Center(
                     child: SizedBox(
-                      child:
-                          CameraPreview(controller), // This is the camera view
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 30.0),
+                          const Text(
+                              'Please wait a few seconds after taking picture'),
+                          SizedBox(height: 10.0),
+                          CameraPreview(controller),
+                        ],
+                      ), // This is the camera view
                     ),
                   ),
                   Align(
                       alignment: Alignment.bottomCenter,
                       child: Padding(
-                          padding: const EdgeInsets.all(20),
+                          padding: const EdgeInsets.all(30),
                           child: Visibility(
                               visible: controller.value.isInitialized,
                               child: FloatingActionButton(
@@ -129,7 +136,10 @@ class _CameraScreenState extends State<CameraScreen> {
                                     print(e);
                                   }
                                 },
-                                child: const Icon(Icons.camera_alt),
+                                child: const Icon(
+                                  Icons.camera_alt,
+                                  size: 35.0,
+                                ),
                               )))),
                 ]);
               } else {

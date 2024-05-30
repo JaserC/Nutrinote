@@ -9,16 +9,15 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
 
+  //Register adapter
   Hive.registerAdapter(ItemAdapter());
 
+  //Open box
   final box = await Hive.openBox<PreviousItem>('previous_items');
 
-  runApp(
-      ChangeNotifierProvider(
-        create: (context) => HistoryProvider(box) , 
-        child: const MyApp(),
-      )
-    );
-
-  
+  //Pass provider down to app
+  runApp(ChangeNotifierProvider(
+    create: (context) => HistoryProvider(box),
+    child: const MyApp(),
+  ));
 }
