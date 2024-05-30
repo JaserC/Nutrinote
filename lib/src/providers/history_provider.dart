@@ -75,6 +75,7 @@ class HistoryProvider extends ChangeNotifier {
     return address ?? 'Unknown';
   }
 
+  // Method to fetch the address based on the latitude and longitude using the Geocoding package.
   Future<String?> _getAddressFromLatLng(Position position) async {
     try {
       List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);

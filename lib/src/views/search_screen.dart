@@ -2,50 +2,61 @@ import 'package:flutter/material.dart';
 import 'package:food_focus/src/models/food_item.dart';
 import 'package:geolocator/geolocator.dart';
 
+
+// StatefulWidget to create a dynamic search screen.
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
 
   @override
+  // Creating state for this screen.
   State<SearchScreen> createState() => _SearchScreenState();
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  
 
-
+  // Asynchronous function to handle location permission from the user.
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
 
+    // Check if location services are enabled on the device.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
+      // Inform the user if location services are disabled.
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
               'Location services are disabled. Please enable the services')));
       return false;
     }
+    // Check the current location permission status.
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
+      // Request permission if previously denied.
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
+        // Show a snackbar if permission is denied.
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Location permissions are denied')));
         return false;
       }
     }
+    // Handle the case where the user has permanently denied location permissions.
     if (permission == LocationPermission.deniedForever) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
               'Location permissions are permanently denied, we cannot request permissions.')));
       return false;
     }
+    // Return true if all permissions checks are passed.
     return true;
   }
 
+  // List to display filtered search results.
   List<FoodItem> displayList = List.from(foods);
 
+  // Function to update the search results based on the user's input.
   void updateList(String value) {
-    //filtering our list
+    // Filtering the food list based on the input string.
     setState(() {
       displayList = foods
           .where((element) =>
@@ -74,6 +85,7 @@ class _SearchScreenState extends State<SearchScreen> {
           mainAxisAlignment:  MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+              // Text field for user input to search food items.
               TextField(
                 canRequestFocus: true,
                 keyboardType: TextInputType.name,
@@ -90,6 +102,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
               ),
               const SizedBox(height: 20),
+              // List view to display search results.
               Expanded(
                 child: ListView.builder(
                   itemCount: displayList.length,

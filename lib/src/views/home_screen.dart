@@ -105,7 +105,7 @@ class HomeScreen extends StatelessWidget {
                 label: 'Welcome Back Text',
                 child: const Text(
                   'Welcome Back!',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, fontFamily: "Montserrat"),
                 ),
               ),
               const SizedBox(height: 10),

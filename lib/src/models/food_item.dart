@@ -11,8 +11,8 @@ import 'package:intl/intl.dart';
 
 part 'food_item.g.dart';
 
-//https://stackoverflow.com/questions/65213035/how-to-get-city-from-coordinates-in-flutter
 
+// A StatelessWidget that represents a single food item in the search screen.
 class FoodItem extends StatelessWidget {
   final String mealName;
   final String mealImagePath;
@@ -82,6 +82,7 @@ class FoodItem extends StatelessWidget {
   }
 }
 
+// A HiveType annotated class for storing previous items with metadata.
 @HiveType(typeId: 3, adapterName: "ItemAdapter")
 class PreviousItem extends StatelessWidget {
   @HiveField(0)
@@ -127,39 +128,43 @@ class PreviousItem extends StatelessWidget {
       },
       child: Semantics(
         label: 'History entry for $mealName',
-        child: Expanded(
-          child: Column(
-            children: [
-              Semantics(
-                label: '$mealName picture',
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: SizedBox.fromSize(
-                    size: const Size.fromRadius(40), // Image radius
-                    child: mealPic,
-                  ),
+        child: Row(
+          children: [
+            Semantics(
+              label: '$mealName picture',
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: SizedBox.fromSize(
+                  size: const Size.fromRadius(40), // Image radius
+                  child: mealPic,
                 ),
               ),
-              Text(
-                mealName,
-                style: const TextStyle(
-                    color: Colors.green,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12),
-                textAlign: TextAlign.center,
-              ),
-              Text(
-                _formatDateTime(dateTime),
-                style: TextStyle(color: Colors.green[300], fontSize: 10),
-                textAlign: TextAlign.center,
-              ),
-              Text(
-                (location != null) ? location.toString() : 'No Location',
-                style: TextStyle(color: Colors.green[300], fontSize: 8),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(width: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  mealName,
+                  style: const TextStyle(
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14),
+                      textAlign: TextAlign.left,
+                ),
+                Text(
+                  _formatDateTime(dateTime),
+                  style: TextStyle(color: Colors.green[300], fontSize: 12),
+                  textAlign: TextAlign.left,
+                ),
+                Text(
+                  (location != null) ? location.toString() : 'No Location',
+                  style: TextStyle(color: Colors.green[300], fontSize: 10),
+                  textAlign: TextAlign.left,
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
@@ -170,6 +175,7 @@ class PreviousItem extends StatelessWidget {
   }
 }
 
+// Class to represent the detailed view of a meal, navigated to from other screens.
 class MealDetailScreen extends StatelessWidget {
   final String mealName;
   final String mealImagePath;
@@ -245,6 +251,7 @@ class MealDetailScreen extends StatelessWidget {
   }
 }
 
+//Hard coded items for search screen
 List<FoodItem> foods = [
   const FoodItem(
       mealName: 'Baked Chicken Thighs',
