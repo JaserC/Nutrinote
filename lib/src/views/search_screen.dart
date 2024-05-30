@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_focus/src/models/food_item.dart';
+import 'package:geolocator/geolocator.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -9,6 +10,9 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  
+
+
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -71,9 +75,6 @@ class _SearchScreenState extends State<SearchScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
               TextField(
-                controller: _controller,
-                focusNode: _focusNode,
-                onTap: ()  => _focusNode.requestFocus(), 
                 canRequestFocus: true,
                 keyboardType: TextInputType.name,
                 onChanged: (value) => updateList(value),
@@ -100,7 +101,6 @@ class _SearchScreenState extends State<SearchScreen> {
                 )),
               ]),
         ),
-      ),
-    );
+      );
   }
 }
