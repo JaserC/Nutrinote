@@ -40,40 +40,43 @@ class FoodItem extends StatelessWidget {
           ),
         );
       },
-      child: Container(
-        height: 100,
-        margin: const EdgeInsets.symmetric(horizontal: 8.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Row(children: [
-          Container(
-            width: 20,
+      child: Semantics(
+        label: 'Search entry for $mealName',
+        child: Container(
+          height: 100,
+          margin: const EdgeInsets.symmetric(horizontal: 8.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
           ),
-          Container(
-            padding: const EdgeInsets.all(4), // Border width
-            decoration: BoxDecoration(
-                color: Colors.yellow[100], shape: BoxShape.circle),
-            child: Semantics(
-              label: '$mealName picture',
-              child: ClipOval(
-                child: SizedBox.fromSize(
-                  size: const Size.fromRadius(40), // Image radius
-                  child: Image.asset(mealImagePath, fit: BoxFit.cover),
+          child: Row(children: [
+            Container(
+              width: 20,
+            ),
+            Container(
+              padding: const EdgeInsets.all(4), // Border width
+              decoration: BoxDecoration(
+                  color: Colors.yellow[100], shape: BoxShape.circle),
+              child: Semantics(
+                label: '$mealName picture',
+                child: ClipOval(
+                  child: SizedBox.fromSize(
+                    size: const Size.fromRadius(40), // Image radius
+                    child: Image.asset(mealImagePath, fit: BoxFit.cover),
+                  ),
                 ),
               ),
             ),
-          ),
-          Container(width: 20),
-          Text(
-            mealName,
-            style: const TextStyle(
-              fontSize: 14,
-              color: Colors.green,
-              fontWeight: FontWeight.bold,
+            Container(width: 20),
+            Text(
+              mealName,
+              style: const TextStyle(
+                fontSize: 14,
+                color: Colors.green,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-        ]),
+          ]),
+        ),
       ),
     );
   }
