@@ -8,17 +8,19 @@ class AccountScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Row(
-          children: [
-              Image.asset('assets/images/food_focus_logo.png', width: 40, height: 40),
+          title: Row(
+            children: [
+              Image.asset('assets/images/food_focus_logo.png',
+                  width: 40, height: 40),
               const SizedBox(width: 10),
               const Text("Food Focus", style: TextStyle(color: Colors.green)),
             ],
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0.0
-      ),
-      body: const Center(child: Text('Account Screen', style: TextStyle(color: Colors.black))),
+          ),
+          backgroundColor: Colors.white,
+          elevation: 0.0),
+      body: const Center(
+          child: Text('Account Screen Placeholder for MVP',
+              style: TextStyle(color: Colors.black))),
     );
   }
 }

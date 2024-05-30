@@ -30,6 +30,8 @@ For future work of our app, we would like to continue working with Google Gemini
 ## Citations
 The images in our app are from Google Images. Also, we referenced Stack Overflow for git and debugging help. We asked both instructors, Ben and Lauren, and other TAs to help us getting started on the camera part of the app. We followed some YouTube videos to help us implement the camera feature and navigation bar: https://www.youtube.com/watch?v=MSv38jO4EJk and https://www.youtube.com/watch?v=TtXER1_Cq3E. The icons in our app are from https://thenounproject.com. Some helpful articles to change our app icon are https://www.geeksforgeeks.org/flutter-changing-app-icon/ and https://pub.dev/packages/flutter_launcher_icons. We referenced from the Flutter docs and class materials for our code. We used Google Gemini API for our cloud vision API: https://ai.google.dev/.
 
+A chunk of code also came from a variety of past homework assignments, namely the Journal, Drawing App, and Food Finder. It wasn't copied code so much as the concepts and structure in which they were applied were similar. 
+
 ## Reflection Questions
 What do you feel was the most valuable thing you learned in CSE 340 that will help you beyond this class, and why?
 
@@ -37,6 +39,6 @@ The most valuable thing we learned in CSE 340 was understanding how to create wi
 
 If you could go back and give yourself 2-3 pieces of advice at the beginning of the class, what would you say and why? Alternatively: what 2-3 pieces of advice would you give to future students who take CSE 340 and why?
 
-An advice to give for future students who take CSE 340 would be starting on your work early and ask TA for help during OH. Since there is only an week to work on each app project, the class is fast-paced and you may not have enough time to finish the project. However, there are resubmissions, but you'll need to have time to fix your previous assignment while also working on the next app assignment. Thus, it's important to allocate your assignments and set time for yourself to work on CSE 340 assignments.
+An advice to give for future students who take CSE 340 would be starting on your work early and ask TA for help during OH. Since there is only an week to work on each app project, the class is fast-paced and you may not have enough time to finish the project. However, there are resubmissions, but you'll need to have time to fix your previous assignment while also working on the next app assignment. One thing I would've done differently is making bare-bone submissions for the original deadline rather than leaving things up to the resubmission window because that feedback can be quite valuable. Thus, it's important to allocate your assignments and set time for yourself to work on CSE 340 assignments.
 
 Another advice is that the class would provide basic Flutter code to introduce you to new materials. However, you would need to research and take additional time outside of class to learn more on how to implement specific features in your app assignments. Overall, the class can be hard to keep up and you will need to take time to learn Flutter.

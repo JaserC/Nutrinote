@@ -20,8 +20,8 @@ class FaqScreen extends StatelessWidget {
           ),
           backgroundColor: Colors.white,
           elevation: 0.0),
-      body: Center(
-        child: Expanded(
+      body: SingleChildScrollView(
+        child: Center(
           child: Column(
             children: [
               const Text("FAQ",

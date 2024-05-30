@@ -17,9 +17,9 @@ Depending on what you are making, it can be a good idea to include screenshots o
 ## How to Use
 Explain how to build and run the project, as well as the layout of your project structure (what files/classes implement what functionality).
 
-To run our app, download our code
+Our application works solely for Android mobile devices. IOS mobile devices can run the app and get reasonable results, but there is a semi-important bug regarding IOS file paths that mess with our implementation, so for grading purposes, we reccomend using an android to test the functionality of the app. 
 
-Android and iOS
+With that said, our app also has an API key that is neccessary that is stored in a static class. This file has been linked in an edstem post by Jaser Chowdhury called "Group 18 API Key (Final Project Submission)" - This is post #461. The file is called apiKey.dart, and instructions are on that post about how to use it.  
 
 ## Installation
 Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
