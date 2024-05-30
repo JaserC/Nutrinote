@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:food_focus/src/providers/language_provider.dart';
 import 'package:provider/provider.dart';
 
+//A view designed to give users a selection between language settings (presents languages as clickable tiles)
+//This is a mock view, not functional, only meant to provide a future structure for a page like this
 class LanguageScreen extends StatelessWidget {
   const LanguageScreen({super.key});
 
@@ -67,14 +69,15 @@ class LanguageScreen extends StatelessWidget {
 
   Widget _createLanguageTile(
       String language, String filePath, LanguageProvider provider) {
+    //Style the tile depending on its selection status
+
     bool isSelected = language == provider.languageSelected;
     String label = isSelected
         ? '$language currently selected'
         : 'Select $language language';
     Color bgColor = isSelected
         ? const Color.fromARGB(255, 0, 0, 0)
-        : const Color.fromARGB(255, 255, 255,
-            255); //Set the bg color for the button based on its selection
+        : const Color.fromARGB(255, 255, 255, 255);
     Color txtColor = isSelected
         ? const Color.fromARGB(255, 255, 255, 255)
         : const Color.fromARGB(255, 0, 0, 0);
@@ -96,13 +99,12 @@ class LanguageScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(
-                      5.0), // Rounded corners for the image
+                  borderRadius: BorderRadius.circular(5.0),
                   child: Image.asset(
-                    filePath, // Path to your image
+                    filePath,
                     width: 35.0,
                     height: 20.0,
-                    fit: BoxFit.cover, // Adjust the image size
+                    fit: BoxFit.cover,
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -117,7 +119,7 @@ class LanguageScreen extends StatelessWidget {
               ],
             ),
             onTap: () {
-              //When clicked, if the button is not already selected, then it will be the new current (otherwise deselects)
+              //When clicked, the selected language will be reflected in the provider
               provider.languageSelected = language;
             },
           ),

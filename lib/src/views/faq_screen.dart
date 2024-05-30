@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_faq/flutter_faq.dart';
 
+//List of FAQ items created with flutter library (flutter_faq)
+//Designed to give users answers to questions they have about the app or solve potential error cases
 class FaqScreen extends StatelessWidget {
   const FaqScreen({super.key});
 
