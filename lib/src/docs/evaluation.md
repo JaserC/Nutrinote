@@ -57,7 +57,7 @@ Usability Subscore: 71.875
 
 Name: Mya
 
-System Usability Scale Score: 87.5
+System Usability Scale Score: 87.5 (Acceptable)
 
 Learnabilty Subscore: 100
 
@@ -65,33 +65,43 @@ Usability Subscore: 65.625
 
 ### SUS Testing #7
 
-Name:
+Name: Farris
 
-System Usability Scale Score:
+System Usability Scale Score: 87.5 (Acceptable)
 
-Learnabilty Subscore:
+Learnabilty Subscore: 100
 
-Usability Subscore:
+Usability Subscore: 62.5
 
 ### SUS Testing #8
 
-Name:
+Name: Kevin
 
-System Usability Scale Score:
+System Usability Scale Score: 85 (Acceptable)
 
-Learnabilty Subscore:
+Learnabilty Subscore: 75
 
-Usability Subscore:
+Usability Subscore: 56.25
 
 ### SUS Testing #9
 
-Name:
+Name: Steven
 
-System Usability Scale Score:
+System Usability Scale Score: 87.5 (Acceptable)
 
-Learnabilty Subscore:
+Learnabilty Subscore: 100
 
-Usability Subscore:
+Usability Subscore: 75
+
+### SUS Testing #10
+
+Name: Melisa
+
+System Usability Scale Score: 65 (lower than average)
+
+Learnabilty Subscore: 100
+
+Usability Subscore: 71.875
 
 ## Usability 
 Based on our SUS Testing results, many of our participants overall would use Food Focus but not as a frequent user. They find that the features in the app are well integreated and easy to use. The learnabilty score of our app has an high average, which shows that it's effiecent to learn and quickly to know how use Food Focus. It doesn't takes a lot of effort for our users to understand how our app works. 
