@@ -17,7 +17,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
     //filtering our list
     setState(() {
       displayList = historyProvider.pastFoods;
-    });
+      displayList.sort((a, b) => b.dateTime.compareTo(a.dateTime));
+      });
   }
 
   @override

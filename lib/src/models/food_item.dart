@@ -77,16 +77,6 @@ class FoodItem extends StatelessWidget {
       ),
     );
   }
-
-  compareTo(FoodItem b) {
-    if (mealName.compareTo(b.mealName) == 1) {
-      return 1;
-    } else if (mealName.compareTo(b.mealName) == 0) {
-      return 0;
-    } else {
-      return -1;
-    }
-  }
 }
 
 @HiveType(typeId: 3, adapterName: "ItemAdapter")
